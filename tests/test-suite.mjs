@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const BASE_URL = process.env.TEST_BASE_URL || 'http://localhost:4321';
+const BASE_URL = process.env.TEST_BASE_URL || 'http://localhost:4322';
 const GOOGLE_SCRIPT_URL =
   process.env.GOOGLE_SCRIPT_URL ||
   'https://script.google.com/macros/s/AKfycbwxzjur4GlPl7oloAtsOaI3kBcl62JsJII7Dykg32hb0vX4TNXGeNxCp1Z3a--f2Mnz/exec';
@@ -30,11 +30,10 @@ async function testLocalStorefrontPages() {
     '/catalogue',
     '/a-propos',
     '/contact',
-    '/produit/miroir-lumineux-noir',
-    '/produit/miroir-lumineux-blanc',
+    '/produit/lampe-led-bois-intelligente',
     '/ar',
     '/ar/catalogue',
-    '/ar/produit/miroir-lumineux-noir'
+    '/ar/produit/lampe-led-bois-intelligente'
   ];
 
   for (const page of pages) {

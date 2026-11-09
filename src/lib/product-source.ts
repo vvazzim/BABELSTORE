@@ -323,7 +323,15 @@ export const getProducts = async () => {
   if (!cachedProductsPromise || isCacheExpired) {
     cachedProductsPromise = (async () => {
       const sheetProducts = await fetchSheetProducts();
-      if (sheetProducts) return sheetProducts;
+      if (sheetProducts && sheetProducts.length > 0) {
+        const combined = [...sheetProducts];
+        for (const lp of localProducts) {
+          if (!combined.some((sp) => sp.slug === lp.slug || sp.id === lp.id)) {
+            combined.push(lp);
+          }
+        }
+        return combined;
+      }
 
       console.warn('[product-source] Falling back to local src/data/products.ts dataset.');
       return localProducts;
