@@ -1,12 +1,12 @@
-# 🎓 GUIDE DE FORMATION - GESTIONNAIRE BABEL STORE
-> **Document officiel à l'attention du gestionnaire de la boutique Babel Store**  
+# 🎓 GUIDE DE FORMATION - GESTIONNAIRE BUBLE STORE DZ
+> **Document officiel à l'attention du gestionnaire de la boutique BUBLE STORE DZ**  
 > *Dernière mise à jour : Novembre 2026*
 
 ---
 
 ## 📌 1. Vue d'ensemble du système
 
-Babel Store fonctionne avec une architecture simple, robuste et autonome :
+BUBLE STORE DZ fonctionne avec une architecture simple, robuste et autonome :
 - **Boutique en ligne (Frontend)** : Site rapide optimisé pour mobile en Algérie (français et arabe RTL).
 - **Base de données centrale** : Un seul classeur **Google Sheets** dédié.
 - **Moteur d'automatisation** : Une passerelle **Google Apps Script** qui connecte le site au Google Sheet.

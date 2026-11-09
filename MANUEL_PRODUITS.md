@@ -1,8 +1,8 @@
-# Manuel Produits & Commandes BABEL STORE
+# Manuel Produits & Commandes BUBLE STORE DZ
 
 ## Vue d'ensemble
 
-Le site BABEL STORE utilise :
+Le site BUBLE STORE DZ utilise :
 
 - Un seul Google Sheet dédié : `1BJ_lZmNtQKoo9nLGgSkZbgPmIeK19xGQfNJHQqc4KNw`
 - Un seul Google Apps Script dédié : `https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec`

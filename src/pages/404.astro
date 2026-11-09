@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="Page non trouvée" description="BABEL STORE - Page non trouvée">
+<MainLayout title="Page non trouvée" description="BUBLE STORE DZ - Page non trouvée">
   <!-- Container standard 404 -->
   <div id="standard-404" class="section-shell min-h-[50vh] flex items-center justify-center py-20 text-center">
     <div class="container-shell max-w-lg">
@@ -163,7 +163,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         if (orderBtn) {
           orderBtn.addEventListener('click', () => {
             const contactPhone = '+213550000000';
-            const message = encodeURIComponent(`Bonjour Babel Store, je souhaite commander : ${title} (${price}).`);
+            const message = encodeURIComponent(`Bonjour Buble Store DZ, je souhaite commander : ${title} (${price}).`);
             window.location.href = `/catalogue`;
           });
         }

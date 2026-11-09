@@ -2,53 +2,53 @@ import { faqItems } from './faq';
 import type { SiteData } from '../lib/types';
 
 export const siteData: SiteData = {
-  brandName: 'BABEL STORE',
+  brandName: 'BUBLE STORE DZ',
   tagline: 'Sélection exclusive & tendances du quotidien',
   description:
-    'Boutique algerienne dediee aux articles tendance, elegants et indispensables pour votre confort au quotidien. Qualite verifiee, livraison rapide 58 wilayas et paiement securise a la livraison.',
+    'Boutique algérienne dédiée aux articles tendance, élégants et indispensables pour votre confort au quotidien. Qualité vérifiée, livraison rapide 58 wilayas et paiement sécurisé à la livraison.',
   primaryCTA: {
-    label: 'Decouvrir la selection',
+    label: 'Découvrir la sélection',
     href: '/catalogue'
   },
   secondaryCTA: {
-    label: 'A propos de Babel',
+    label: 'À propos de Buble Store',
     href: '/a-propos'
   },
   socialLinks: [
     {
       label: 'Instagram',
-      handle: '@babelstore.dz',
-      href: 'https://www.instagram.com/babelstore.dz'
+      handle: '@bublestore.dz',
+      href: 'https://www.instagram.com/bublestore.dz'
     },
     {
       label: 'TikTok',
-      handle: '@babelstore.dz',
-      href: 'https://www.tiktok.com/@babelstore.dz'
+      handle: '@bublestore.dz',
+      href: 'https://www.tiktok.com/@bublestore.dz'
     },
     {
       label: 'Facebook',
-      handle: 'Babel Store DZ',
-      href: 'https://www.facebook.com/babelstore.dz'
+      handle: 'Buble Store DZ',
+      href: 'https://www.facebook.com/bublestore.dz'
     }
   ],
-  heroBadge: 'BABEL STORE | Livraison 58 Wilayas | Paiement a la livraison',
+  heroBadge: 'BUBLE STORE DZ | Livraison 58 Wilayas | Paiement à la livraison',
   email: 'babel.store.off@gmail.com',
   trustItems: [
     {
       title: 'Livraison 58 Wilayas',
-      description: 'Expedition express securisee dans toute l Algerie avec confirmation directe par appel.'
+      description: 'Expédition express sécurisée dans toute l Algérie avec confirmation directe par appel.'
     },
     {
-      title: 'Paiement a la livraison',
-      description: 'Payez tranquillement en especes a la reception de votre colis (COD).'
+      title: 'Paiement à la livraison',
+      description: 'Payez tranquillement en espèces à la réception de votre colis (COD).'
     },
     {
-      title: 'Verification avant paiement',
-      description: 'Vous pouvez ouvrir et verifier votre article avant de regler le livreur.'
+      title: 'Vérification avant paiement',
+      description: 'Vous pouvez ouvrir et vérifier votre article avant de régler le livreur.'
     },
     {
-      title: 'Service client reactif 7j/7',
-      description: 'Une equipe a votre ecoute pour vous accompagner et repondre a toute demande.'
+      title: 'Service client réactif 7j/7',
+      description: 'Une équipe à votre écoute pour vous accompagner et répondre à toute demande.'
     }
   ]
 };
@@ -61,16 +61,16 @@ export const brandAssets = {
 
 export const aboutCopy = {
   intro:
-    'Chez Babel Store, notre vocation est de vous apporter le meilleur des produits tendance, pratiques et design a des prix competitifs.',
+    'Chez Buble Store DZ, notre vocation est de vous apporter le meilleur des produits tendance, pratiques et design à des prix compétitifs.',
   mission:
-    'Nous denichons et testons rigoureusement chaque produit pour vous garantir une experience d achat fiable, avec une livraison soignee partout en Algerie.'
+    'Nous dénichons et testons rigoureusement chaque produit pour vous garantir une expérience d achat fiable, avec une livraison soignée partout en Algérie.'
 };
 
 export const arabicSiteData: SiteData = {
-  brandName: 'BABEL STORE',
+  brandName: 'BUBLE STORE DZ',
   tagline: 'تشكيلة مختارة من أحدث المنتجات والاتجاهات العصرية',
   description:
-    'متجركم الجزائري المفضل لأحدث المنتجات العملية والمبتكرة. جودة مضمونة، توصيل سريع لكافة ولايات الوطن والدفع عند الاستلام بعد فحص المنتج.',
+    'متجركم الجزائري المفضل BUBLE STORE DZ لأحدث المنتجات العملية والمبتكرة. جودة مضمونة، توصيل سريع لكافة ولايات الوطن والدفع عند الاستلام بعد فحص المنتج.',
   primaryCTA: {
     label: 'تصفح التشكيلة',
     href: '/ar/catalogue'
@@ -82,21 +82,21 @@ export const arabicSiteData: SiteData = {
   socialLinks: [
     {
       label: 'Instagram',
-      handle: '@babelstore.dz',
-      href: 'https://www.instagram.com/babelstore.dz'
+      handle: '@bublestore.dz',
+      href: 'https://www.instagram.com/bublestore.dz'
     },
     {
       label: 'TikTok',
-      handle: '@babelstore.dz',
-      href: 'https://www.tiktok.com/@babelstore.dz'
+      handle: '@bublestore.dz',
+      href: 'https://www.tiktok.com/@bublestore.dz'
     },
     {
       label: 'Facebook',
-      handle: 'Babel Store DZ',
-      href: 'https://www.facebook.com/babelstore.dz'
+      handle: 'Buble Store DZ',
+      href: 'https://www.facebook.com/bublestore.dz'
     }
   ],
-  heroBadge: 'متجر بابل | توصيل لكافة الولايات | الدفع بعد المعاينة',
+  heroBadge: 'BUBLE STORE DZ | توصيل لكافة الولايات | الدفع بعد المعاينة',
   email: 'babel.store.off@gmail.com',
   trustItems: [
     {
