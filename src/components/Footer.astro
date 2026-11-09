@@ -13,31 +13,31 @@ const developerEmail = 'chikhimedwassim@gmail.com';
 const developerGithub = 'https://github.com/vvazzim';
 ---
 
-<footer class="mt-20 border-t border-brand-line bg-brand-charcoal">
+<footer class="mt-20 border-t-2 border-brand-grenat/30 bg-gradient-to-b from-[#0B132B] to-[#060B1A] text-white">
   <div class="container-shell py-12">
     <div class="grid gap-10 md:grid-cols-[1.2fr_0.8fr_1fr]">
       <div>
         <div class="flex items-center gap-3">
-          <img src={brandAssets.logo} alt={`${siteData.brandName} logo`} class="h-12 w-12 rounded-full object-cover ring-1 ring-brand-gold/45" />
+          <img src={brandAssets.logo} alt={`${siteData.brandName} logo`} class="h-12 w-12 rounded-full object-cover ring-2 ring-brand-gold/45" />
           <div>
-            <div class="text-sm font-semibold uppercase tracking-brand text-brand-gold">{siteData.brandName}</div>
-            <div class="text-xs text-white/65">{siteData.tagline}</div>
+            <div class="text-sm font-bold uppercase tracking-brand text-brand-gold">{siteData.brandName}</div>
+            <div class="text-xs text-slate-300">{siteData.tagline}</div>
           </div>
         </div>
-        <p class="mt-4 max-w-md text-sm leading-7 text-white">
+        <p class="mt-4 max-w-md text-sm leading-7 text-slate-300">
           {locale === 'ar'
-            ? 'متجر متخصص في تقديم منتجات عملية وذكية لتحسين راحتك اليومية.'
-            : 'Boutique dédiée aux produits pratiques et intelligents pour améliorer votre confort au quotidien.'}
+            ? 'متجر جزائري رائد مخصص للمنتجات العصرية، الأنيقة والعملية لتحسين راحتك اليومية بكل ثقة وأمان.'
+            : 'Boutique algérienne dédiée aux articles tendance, élégants et indispensables pour votre confort au quotidien. Qualité vérifiée et livraison 58 wilayas.'}
         </p>
       </div>
 
       <div>
-        <div class="text-sm font-semibold uppercase tracking-brand text-white">Navigation</div>
+        <div class="text-sm font-bold uppercase tracking-brand text-brand-gold">Navigation</div>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={withLocalePath('/', locale)} class="text-white hover:text-brand-gold">{uiText[locale].nav.home}</a>
-          <a href={withLocalePath('/catalogue', locale)} class="text-white hover:text-brand-gold">{uiText[locale].nav.catalogue}</a>
-          <a href={withLocalePath('/a-propos', locale)} class="text-white hover:text-brand-gold">{uiText[locale].nav.about}</a>
-          <a href={withLocalePath('/contact', locale)} class="text-white hover:text-brand-gold">{uiText[locale].nav.contact}</a>
+          <a href={withLocalePath('/', locale)} class="text-slate-300 hover:text-brand-gold transition-colors">{uiText[locale].nav.home}</a>
+          <a href={withLocalePath('/catalogue', locale)} class="text-slate-300 hover:text-brand-gold transition-colors">{uiText[locale].nav.catalogue}</a>
+          <a href={withLocalePath('/a-propos', locale)} class="text-slate-300 hover:text-brand-gold transition-colors">{uiText[locale].nav.about}</a>
+          <a href={withLocalePath('/contact', locale)} class="text-slate-300 hover:text-brand-gold transition-colors">{uiText[locale].nav.contact}</a>
         </div>
       </div>
 

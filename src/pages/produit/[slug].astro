@@ -60,8 +60,8 @@ const schema = {
     <div class="container-shell">
       <div class="mb-8">
         <div class="text-sm font-semibold uppercase tracking-brand text-brand-muted">{product.collection}</div>
-        <h1 class="mt-3 text-3xl font-semibold text-brand-charcoal sm:text-5xl">{headingTitle}</h1>
-        {headingSubtitle && <p class="mt-3 text-lg font-medium text-brand-charcoal/80 sm:text-2xl">{headingSubtitle}</p>}
+        <h1 class="mt-3 text-3xl font-extrabold text-brand-navy sm:text-5xl">{headingTitle}</h1>
+        {headingSubtitle && <p class="mt-3 text-lg font-medium text-brand-navy/80 sm:text-2xl">{headingSubtitle}</p>}
         <p class="mt-4 max-w-2xl text-base leading-7 text-brand-muted sm:text-lg">{kicker}</p>
       </div>
 
@@ -128,16 +128,16 @@ const schema = {
           <p class="mt-4 text-sm leading-7 text-brand-muted sm:text-base">{longDescription}</p>
 
           <div class="mt-6 flex items-end gap-4">
-            <div class="text-2xl font-semibold text-brand-charcoal">{product.price}</div>
-            {product.oldPrice && <div class="text-sm text-brand-muted line-through">{product.oldPrice}</div>}
+            <div class="text-3xl font-bold text-brand-navy">{product.price}</div>
+            {product.oldPrice && <div class="text-base text-brand-muted line-through">{product.oldPrice}</div>}
           </div>
 
-          <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5">
-            <div class="text-sm font-semibold text-brand-charcoal">{highlightsTitle}</div>
+          <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5 shadow-soft">
+            <div class="text-sm font-bold text-brand-navy">{highlightsTitle}</div>
             <ul class="mt-4 grid gap-3 text-sm text-brand-muted">
               {highlights.map((feature) => (
                 <li class="flex items-start gap-3">
-                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-gold"></span>
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-grenat"></span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -145,12 +145,12 @@ const schema = {
           </div>
 
           {reasons.length > 0 && (
-            <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5">
-              <div class="text-sm font-semibold text-brand-charcoal">{reasonsTitle}</div>
+            <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5 shadow-soft">
+              <div class="text-sm font-bold text-brand-navy">{reasonsTitle}</div>
               <ul class="mt-4 grid gap-3 text-sm text-brand-muted">
                 {reasons.map((reason) => (
                   <li class="flex items-start gap-3">
-                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-charcoal"></span>
+                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-navy"></span>
                     <span>{reason}</span>
                   </li>
                 ))}
@@ -159,8 +159,8 @@ const schema = {
           )}
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/catalogue" class="btn-secondary">Visiter la boutique</a>
-            <a href="/contact" class="btn-secondary">Contacter la marque</a>
+            <a href="/catalogue" class="btn-primary !bg-brand-navy hover:!bg-brand-navylight !text-white">Visiter la boutique</a>
+            <a href="/contact" class="btn-secondary hover:!border-brand-grenat hover:!text-brand-grenat">Contacter la marque</a>
           </div>
 
           <OrderForm

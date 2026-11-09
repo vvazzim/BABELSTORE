@@ -6,43 +6,44 @@ import MainLayout from '../../layouts/MainLayout.astro';
   <section class="section-shell">
     <div class="container-shell">
       <div class="mx-auto max-w-4xl">
-        <span class="inline-flex items-center gap-2 rounded-full border border-brand-cognac/30 bg-white/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-cognac">
+        <span class="eyebrow">
           من نحن
         </span>
-        <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-brand-charcoal sm:text-5xl">
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-brand-navy sm:text-5xl">
           متجر بابل - الأناقة والذكاء لتسهيل يومياتكم
         </h1>
         <div class="mt-8 space-y-5 text-sm leading-8 text-brand-muted sm:text-base">
           <p>في <strong>متجر بابل (BABEL STORE)</strong>، مهمتنا هي توفير تجربة تسوق استثنائية تجمع بين رقي التصميم، الفائدة الحقيقية والجودة المضمونة بأسعار مدروسة وفي متناول الجميع.</p>
-          <p>نؤمن بأن التفاصيل تصنع الفارق، لذلك نقوم باختيار وتجربة كل منتج بدقة متناهية لنتأكد من ملاءمته لأعلى معايير الراحة والعملية في المنزل والعمل.</p>
-          <p>نضع راحة بالكم وشفافية التعامل على رأس أولوياتنا: توصيل سريع وموثوق لكافة ولايات الجزائر مع إمكانية فتح ومعاينة الطرد قبل الدفع.</p>
+          <p>مستوحى من هوية بصرية ملكية تجمع بين <strong>الأزرق الليلي الفاخر</strong> و<strong>الأحمر العنابي (الغريناتي)</strong>، نؤمن بأن التفاصيل تصنع الفارق، لذلك نختار كل منتج بعناية فائقة ليلبي أعلى معايير الذوق والراحة.</p>
+          <p>نضع راحة بالكم وشفافية التعامل على رأس أولوياتنا: توصيل سريع وموثوق لكافة 58 ولاية مع إمكانية فتح ومعاينة الطرد قبل الدفع.</p>
         </div>
 
         <div class="mt-10 grid gap-4 sm:grid-cols-2">
-          <article class="rounded-3xl border border-[#DFD3C0] bg-white p-7 shadow-soft">
-            <h2 class="text-xl font-bold text-brand-charcoal">لماذا يثق بنا عملاؤنا؟</h2>
+          <article class="rounded-3xl border border-brand-line bg-white p-7 shadow-soft transition hover:shadow-premium">
+            <h2 class="text-xl font-bold text-brand-navy">لماذا يثق بنا عملاؤنا؟</h2>
             <ul class="mt-4 space-y-3 text-sm leading-8 text-brand-muted">
-              <li>✓ شحن سريع ومضمون لـ 58 ولاية.</li>
-              <li>✓ الدفع نقداً عند الاستلام بعد معاينة المنتج.</li>
-              <li>✓ منتجات أصلية، مجربة ومطابقة للصور تماماً.</li>
-              <li>✓ خدمة عملاء متفانية ومتاحة للإجابة عن كل استفسار.</li>
+              <li><span class="text-brand-grenat font-bold">✓</span> شحن سريع ومضمون لـ 58 ولاية.</li>
+              <li><span class="text-brand-grenat font-bold">✓</span> الدفع نقداً عند الاستلام بعد معاينة المنتج.</li>
+              <li><span class="text-brand-grenat font-bold">✓</span> منتجات أصلية، مجربة ومطابقة للصور تماماً.</li>
+              <li><span class="text-brand-grenat font-bold">✓</span> خدمة عملاء متفانية ومتاحة للإجابة عن كل استفسار.</li>
             </ul>
           </article>
 
-          <article class="rounded-3xl border border-[#DFD3C0] bg-white p-7 shadow-soft">
-            <h2 class="text-xl font-bold text-brand-charcoal">التزامنا بالجودة</h2>
+          <article class="rounded-3xl border border-brand-line bg-white p-7 shadow-soft transition hover:shadow-premium">
+            <h2 class="text-xl font-bold text-brand-navy">التزامنا بالجودة</h2>
             <p class="mt-4 text-sm leading-8 text-brand-muted">
               المئات من الزبائن في مختلف أنحاء الجزائر يعتمدون على متجر بابل لتلبية احتياجاتهم اليومية. نحن هنا لنوفر لكم الأفضل دائماً دون أي تعقيد.
             </p>
           </article>
         </div>
 
-        <div class="mt-10 rounded-[2rem] border border-[#DFD3C0] bg-gradient-to-br from-[#FAF5EE] to-[#EFE4D6] p-8 shadow-soft">
-          <p class="text-sm font-semibold leading-8 text-brand-charcoal sm:text-base">
+        <div class="mt-10 relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0B132B] via-[#101D38] to-[#060B1A] p-8 text-white shadow-premium">
+          <div class="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-brand-grenat/30 blur-2xl"></div>
+          <p class="relative text-sm font-semibold leading-8 text-slate-200 sm:text-base">
             انضموا إلينا اليوم واكتشفوا تشكيلة فريدة تجعل حياتكم اليومية أكثر سهولة وجمالاً.
           </p>
-          <div class="mt-6">
-            <a href="/ar/catalogue" class="btn-primary !bg-brand-charcoal hover:!bg-brand-cognac !text-brand-goldsoft !px-7 !py-3">
+          <div class="relative mt-6">
+            <a href="/ar/catalogue" class="btn-primary !bg-brand-grenat hover:!bg-brand-grenatdark !text-white !px-7 !py-3 shadow-grenat">
               تصفح التشكيلة الكاملة
             </a>
           </div>

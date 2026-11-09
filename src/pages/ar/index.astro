@@ -69,50 +69,55 @@ const newProducts = getNewArrivalProducts(catalogProducts);
         </section>
       )}
 
-      <!-- Reassurance Section BABEL STORE (Arabic) -->
-      <section class="relative overflow-hidden rounded-[2.5rem] border border-[#DFD3C0] bg-gradient-to-br from-[#FAF5EE] to-[#EFE4D6] p-8 sm:p-12">
-        <div class="max-w-3xl">
-          <span class="inline-flex items-center gap-2 rounded-full border border-brand-cognac/30 bg-white/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-cognac">
+      <!-- Reassurance Section BABEL STORE (Arabic) : Bleu Nuit & Grenat Impérial -->
+      <section class="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0B132B] via-[#101D38] to-[#060B1A] p-8 text-white shadow-premium sm:p-12">
+        <!-- Glows -->
+        <div class="pointer-events-none absolute -left-16 -top-16 h-80 w-80 rounded-full bg-brand-grenat/25 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-brand-blueaccent/20 blur-3xl"></div>
+
+        <div class="relative max-w-3xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-grenat/50 bg-brand-grenat/20 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-goldsoft shadow-sm backdrop-blur">
+            <span class="h-2 w-2 rounded-full bg-brand-grenat animate-pulse"></span>
             ثقتكم أولويتنا
           </span>
-          <h2 class="mt-4 text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+          <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             تجربة تسوق موثوقة ومريحة مع متجر بابل
           </h2>
-          <p class="mt-4 text-sm leading-relaxed text-brand-muted sm:text-base">
+          <p class="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base">
             في متجر بابل، نلتزم باختيار وتجربة كل منتج بعناية لنضمن لكم جودة تدوم وتلبي تطلعاتكم. نسهر على خدمتكم بكل أمان من لحظة الطلب حتى استلام الطرد عند باب منزلكم.
           </p>
 
           <div class="mt-8 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
-              <div class="text-xl">🚚</div>
-              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">شحن سريع لـ 58 ولاية</h3>
-              <p class="mt-1 text-xs text-brand-muted">توصيل آمن إلى باب داركم مع تأكيد فوري ومسبق عبر الهاتف.</p>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-md transition hover:border-brand-gold/40 hover:bg-white/[0.1]">
+              <div class="text-2xl">🚚</div>
+              <h3 class="mt-2 text-sm font-bold text-white">شحن سريع لـ 58 ولاية</h3>
+              <p class="mt-1 text-xs text-slate-300">توصيل آمن إلى باب داركم مع تأكيد فوري ومسبق عبر الهاتف.</p>
             </div>
 
-            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
-              <div class="text-xl">💵</div>
-              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">الدفع عند الاستلام</h3>
-              <p class="mt-1 text-xs text-brand-muted">ادفع نقداً بكل راحة بال عند استلام طلبيتك وفحصها.</p>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-md transition hover:border-brand-gold/40 hover:bg-white/[0.1]">
+              <div class="text-2xl">💵</div>
+              <h3 class="mt-2 text-sm font-bold text-white">الدفع عند الاستلام</h3>
+              <p class="mt-1 text-xs text-slate-300">ادفع نقداً بكل راحة بال عند استلام طلبيتك وفحصها.</p>
             </div>
 
-            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
-              <div class="text-xl">🔍</div>
-              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">المعاينة قبل الدفع</h3>
-              <p class="mt-1 text-xs text-brand-muted">يحق لك فتح الطرد والتأكد من مطابقة وجودة المنتج قبل تسليم المبلغ.</p>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-md transition hover:border-brand-gold/40 hover:bg-white/[0.1]">
+              <div class="text-2xl">🔍</div>
+              <h3 class="mt-2 text-sm font-bold text-white">المعاينة قبل الدفع</h3>
+              <p class="mt-1 text-xs text-slate-300">يحق لك فتح الطرد والتأكد من مطابقة وجودة المنتج قبل تسليم المبلغ.</p>
             </div>
 
-            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
-              <div class="text-xl">📞</div>
-              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">خدمة عملاء 7 أيام / 7</h3>
-              <p class="mt-1 text-xs text-brand-muted">فريق متجاوب عبر الهاتف وواتساب لمرافقتكم والإجابة عن كل استفسار.</p>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-md transition hover:border-brand-gold/40 hover:bg-white/[0.1]">
+              <div class="text-2xl">📞</div>
+              <h3 class="mt-2 text-sm font-bold text-white">خدمة عملاء 7 أيام / 7</h3>
+              <p class="mt-1 text-xs text-slate-300">فريق متجاوب عبر الهاتف وواتساب لمرافقتكم والإجابة عن كل استفسار.</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="/ar/catalogue" class="btn-primary !bg-brand-charcoal hover:!bg-brand-cognac !text-brand-goldsoft !px-7 !py-3">
+            <a href="/ar/catalogue" class="btn-primary !bg-brand-grenat hover:!bg-brand-grenatdark !text-white !px-7 !py-3 shadow-grenat">
               تصفح التشكيلة الكاملة
             </a>
-            <a href="/ar/contact" class="btn-secondary !border-[#DFD3C0] !bg-white">
+            <a href="/ar/contact" class="btn-secondary !border-white/20 !bg-white/10 !text-white hover:!bg-white hover:!text-brand-navy backdrop-blur">
               تواصل مع خدمة العملاء
             </a>
           </div>

@@ -20,17 +20,17 @@ const links = [
 <header class="sticky top-0 z-50 border-b border-brand-line/80 bg-brand-bg/95 backdrop-blur">
   <div class="container-shell py-3">
     <div class="hidden items-center justify-between gap-6 md:flex">
-      <a href={withLocalePath('/', locale)} class="flex items-center gap-3">
-        <img src={brandAssets.logo} alt={`${siteData.brandName} logo`} class="h-12 w-12 rounded-full object-cover ring-1 ring-brand-gold/35" />
+      <a href={withLocalePath('/', locale)} class="flex items-center gap-3 group">
+        <img src={brandAssets.logo} alt={`${siteData.brandName} logo`} class="h-12 w-12 rounded-full object-cover ring-2 ring-brand-gold/40 transition duration-300 group-hover:scale-105 group-hover:ring-brand-grenat/50" />
         <div>
-          <div class="text-sm font-semibold uppercase tracking-brand text-brand-charcoal">{siteData.brandName}</div>
+          <div class="text-sm font-bold uppercase tracking-brand text-brand-navy">{siteData.brandName}</div>
           <div class="text-xs text-brand-muted">{siteData.tagline}</div>
         </div>
       </a>
 
       <nav class="flex items-center gap-8">
         {links.map((link) => (
-          <a href={link.href} class="text-sm font-medium text-brand-muted hover:text-brand-charcoal">
+          <a href={link.href} class="text-sm font-medium text-brand-navy/75 hover:text-brand-grenat transition-colors">
             {link.label}
           </a>
         ))}

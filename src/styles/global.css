@@ -14,9 +14,9 @@
   body {
     @apply bg-brand-bg font-sans text-brand-ink antialiased;
     background-image:
-      radial-gradient(circle at top left, rgba(196, 155, 85, 0.12), transparent 32%),
-      radial-gradient(circle at right 22%, rgba(178, 97, 34, 0.07), transparent 26%),
-      linear-gradient(180deg, #F8F3EA 0%, #F3ECDF 100%);
+      radial-gradient(circle at top left, rgba(27, 54, 93, 0.08), transparent 38%),
+      radial-gradient(circle at right 22%, rgba(120, 0, 22, 0.07), transparent 30%),
+      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
     background-attachment: scroll;
   }
 
@@ -25,7 +25,7 @@
   }
 
   ::selection {
-    @apply bg-brand-gold/40 text-brand-ink;
+    @apply bg-brand-grenat/25 text-brand-navy;
   }
 
   a,
@@ -44,27 +44,27 @@
   }
 
   .card-shell {
-    @apply rounded-3xl border border-brand-line/90 bg-brand-surface shadow-soft backdrop-blur;
+    @apply rounded-3xl border border-brand-line bg-brand-surface shadow-soft backdrop-blur;
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.7) inset,
-      0 14px 34px rgba(46, 50, 54, 0.08),
-      0 2px 10px rgba(17, 17, 17, 0.04);
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 14px 34px rgba(11, 19, 43, 0.06),
+      0 2px 10px rgba(11, 19, 43, 0.03);
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-brand-charcoal px-6 py-3 text-sm font-semibold tracking-wide text-brand-goldsoft shadow-premium hover:-translate-y-0.5 hover:text-white;
+    @apply inline-flex items-center justify-center rounded-full bg-brand-grenat px-6 py-3 text-sm font-semibold tracking-wide text-white shadow-grenat hover:-translate-y-0.5 hover:bg-brand-grenatdark;
     transition: all 0.2s ease-in-out;
   }
   .btn-primary:hover {
-    background-color: #B26122;
+    background-color: #54000F;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-brand-line bg-brand-surface px-6 py-3 text-sm font-semibold tracking-wide text-brand-charcoal shadow-soft hover:-translate-y-0.5 hover:border-brand-gold/70 hover:bg-white;
+    @apply inline-flex items-center justify-center rounded-full border border-brand-line bg-brand-surface px-6 py-3 text-sm font-semibold tracking-wide text-brand-navy shadow-soft hover:-translate-y-0.5 hover:border-brand-grenat/50 hover:text-brand-grenat hover:bg-brand-grenatlight;
   }
 
   .eyebrow {
-    @apply inline-flex items-center rounded-full border border-brand-line bg-white/85 px-3 py-1 text-xs font-semibold uppercase tracking-brand text-brand-charcoal shadow-soft;
+    @apply inline-flex items-center rounded-full border border-brand-grenat/20 bg-brand-grenatlight px-3.5 py-1 text-xs font-semibold uppercase tracking-brand text-brand-grenat shadow-soft;
   }
 
   .section-title {

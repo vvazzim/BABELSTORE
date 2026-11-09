@@ -7,10 +7,10 @@ import MainLayout from '../layouts/MainLayout.astro';
   <div id="standard-404" class="section-shell min-h-[50vh] flex items-center justify-center py-20 text-center">
     <div class="container-shell max-w-lg">
       <div class="rounded-[2.5rem] border border-brand-line bg-white p-8 shadow-soft sm:p-12">
-        <span class="inline-block rounded-full bg-brand-pearl px-4 py-1 text-sm font-semibold text-brand-cognac">
+        <span class="inline-block rounded-full bg-brand-grenatlight px-4 py-1 text-sm font-semibold text-brand-grenat">
           Erreur 404
         </span>
-        <h1 class="mt-4 text-3xl font-bold text-brand-charcoal sm:text-4xl">Page non trouvée</h1>
+        <h1 class="mt-4 text-3xl font-extrabold text-brand-navy sm:text-4xl">Page non trouvée</h1>
         <p class="mt-3 text-sm text-brand-muted">
           La page ou l'article que vous recherchez n'est pas disponible ou a été déplacé.
         </p>
@@ -25,8 +25,8 @@ import MainLayout from '../layouts/MainLayout.astro';
   <!-- Container de chargement dynamique si l'URL est un produit récent -->
   <div id="dynamic-product-loader" class="hidden section-shell py-12">
     <div class="container-shell max-w-4xl text-center py-12">
-      <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-brand-charcoal border-r-transparent"></div>
-      <p class="mt-4 text-sm font-medium text-brand-charcoal">Synchronisation en direct du produit depuis Google Sheets...</p>
+      <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-brand-navy border-r-transparent"></div>
+      <p class="mt-4 text-sm font-medium text-brand-navy">Synchronisation en direct du produit depuis Google Sheets...</p>
     </div>
   </div>
 
@@ -46,26 +46,26 @@ import MainLayout from '../layouts/MainLayout.astro';
         <div class="space-y-6">
           <div>
             <div id="dyn-category" class="text-xs font-semibold uppercase tracking-wider text-brand-muted"></div>
-            <h1 id="dyn-title" class="mt-2 text-2xl font-bold text-brand-charcoal sm:text-3xl"></h1>
+            <h1 id="dyn-title" class="mt-2 text-2xl font-extrabold text-brand-navy sm:text-3xl"></h1>
             <div class="mt-4 flex items-baseline gap-4">
               <span id="dyn-old-price" class="text-base text-brand-muted line-through"></span>
-              <span id="dyn-price" class="text-3xl font-bold text-brand-charcoal"></span>
+              <span id="dyn-price" class="text-3xl font-bold text-brand-navy"></span>
             </div>
           </div>
 
-          <div id="dyn-desc" class="text-sm leading-relaxed text-brand-charcoal"></div>
+          <div id="dyn-desc" class="text-sm leading-relaxed text-brand-navy"></div>
 
           <!-- Points forts -->
           <div id="dyn-features-box" class="hidden rounded-2xl border border-brand-line bg-brand-bg/50 p-5">
-            <h3 class="text-sm font-bold text-brand-charcoal">Points forts</h3>
-            <ul id="dyn-features-list" class="mt-3 space-y-2 text-sm text-brand-charcoal"></ul>
+            <h3 class="text-sm font-bold text-brand-navy">Points forts</h3>
+            <ul id="dyn-features-list" class="mt-3 space-y-2 text-sm text-brand-navy"></ul>
           </div>
 
           <!-- Bouton Commander -->
           <div class="pt-4">
             <button
               id="dyn-order-btn"
-              class="w-full rounded-full bg-brand-charcoal py-4 text-base font-bold text-white shadow-soft transition hover:bg-brand-cognac"
+              class="w-full rounded-full bg-brand-grenat py-4 text-base font-bold text-white shadow-grenat transition hover:bg-brand-grenatdark"
             >
               Commander maintenant
             </button>

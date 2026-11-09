@@ -14,8 +14,8 @@ const { locale = 'fr' } = Astro.props as Props;
       id="lang-switch-fr"
       href="/"
       class:list={[
-        'px-4 py-3 text-center text-sm font-semibold',
-        locale === 'fr' ? 'bg-brand-charcoal text-white' : 'text-brand-charcoal hover:bg-brand-bg'
+        'px-4 py-3 text-center text-sm font-semibold transition',
+        locale === 'fr' ? 'bg-brand-navy text-white shadow-sm' : 'text-brand-navy hover:bg-brand-bluelight hover:text-brand-grenat'
       ]}
     >
       FR
@@ -24,8 +24,8 @@ const { locale = 'fr' } = Astro.props as Props;
       id="lang-switch-ar"
       href="/ar"
       class:list={[
-        'border-t border-brand-line px-4 py-3 text-center text-sm font-semibold',
-        locale === 'ar' ? 'bg-brand-charcoal text-white' : 'text-brand-charcoal hover:bg-brand-bg'
+        'border-t border-brand-line px-4 py-3 text-center text-sm font-semibold transition',
+        locale === 'ar' ? 'bg-brand-navy text-white shadow-sm' : 'text-brand-navy hover:bg-brand-bluelight hover:text-brand-grenat'
       ]}
     >
       AR

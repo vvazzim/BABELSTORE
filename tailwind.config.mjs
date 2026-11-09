@@ -5,26 +5,40 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#F5EFE6',
+          bg: '#F8FAFC',
           surface: '#FFFFFF',
-          pearl: '#E2D6C3',
-          sand: '#EAE0D0',
-          cognac: '#B26122',
-          cognacdark: '#8D4713',
-          cognacsoft: '#FAEDE3',
-          cool: '#C7CFD0',
-          ink: '#1A1615',
-          charcoal: '#28211E',
-          muted: '#736862',
-          gold: '#C49B55',
-          goldsoft: '#F7EEDD',
-          amber: '#D9883B',
-          line: '#E3D8C8'
+          pearl: '#F1F5F9',
+          sand: '#E2E8F0',
+          // Palette Signature BABEL STORE : Bleu Nuit & Grenat Royal
+          navy: '#0B132B',
+          navydark: '#060B1A',
+          navylight: '#162344',
+          blue: '#1B365D',
+          blueaccent: '#1D4ED8',
+          bluelight: '#EFF6FF',
+          grenat: '#780016',
+          grenatdark: '#54000F',
+          grenatlight: '#FDF2F4',
+          grenatsoft: '#FCE7EB',
+          // Aliases pour composants existants (remplace définitivement le terracotta Cozy Space)
+          cognac: '#780016',
+          cognacdark: '#54000F',
+          cognacsoft: '#FDF2F4',
+          // Typographie & Neutres
+          ink: '#0B132B',
+          charcoal: '#0F172A',
+          muted: '#64748B',
+          line: '#E2E8F0',
+          // Touche d'or champagne
+          gold: '#C5A880',
+          goldsoft: '#FAF5EE',
+          amber: '#B8860B'
         }
       },
       boxShadow: {
-        soft: '0 14px 34px rgba(40, 33, 30, 0.06), 0 2px 10px rgba(26, 22, 21, 0.03)',
-        premium: '0 24px 60px rgba(40, 33, 30, 0.22), 0 6px 18px rgba(26, 22, 21, 0.08)'
+        soft: '0 14px 34px rgba(11, 19, 43, 0.05), 0 2px 10px rgba(11, 19, 43, 0.03)',
+        premium: '0 24px 60px rgba(11, 19, 43, 0.16), 0 6px 18px rgba(120, 0, 22, 0.08)',
+        grenat: '0 10px 25px rgba(120, 0, 22, 0.25)'
       },
       borderRadius: {
         '4xl': '2rem'
@@ -33,9 +47,9 @@ export default {
         brand: '0.12em'
       },
       backgroundImage: {
-        'babel-hero': 'radial-gradient(ellipse at 78% 22%, rgba(196, 155, 85, 0.28) 0%, transparent 60%), linear-gradient(135deg, #2A211D 0%, #1A1615 65%, #120F0E 100%)',
-        'babel-card': 'linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 100%)',
-        'cozy-hero': 'radial-gradient(ellipse at 78% 22%, rgba(196, 155, 85, 0.28) 0%, transparent 60%), linear-gradient(135deg, #2A211D 0%, #1A1615 65%, #120F0E 100%)'
+        'babel-hero': 'radial-gradient(ellipse at 80% 20%, rgba(120, 0, 22, 0.25) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(29, 78, 216, 0.18) 0%, transparent 60%), linear-gradient(135deg, #0B132B 0%, #0F1D38 60%, #060B1A 100%)',
+        'babel-card': 'linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)',
+        'babel-grenat-glow': 'radial-gradient(circle, rgba(120,0,22,0.15) 0%, transparent 70%)'
       }
     }
   },

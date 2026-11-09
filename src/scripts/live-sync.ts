@@ -169,7 +169,7 @@ function createDynamicProductCard(prod: LiveProduct, locale: 'fr' | 'ar'): HTMLE
   article.innerHTML = `
     <a href="${detailLink}" class="block">
       <div class="relative overflow-hidden bg-brand-pearl p-3">
-        <span class="absolute left-5 top-5 z-10 rounded-full bg-brand-cognac px-3 py-1 text-xs font-semibold text-white shadow-soft">
+        <span class="absolute left-5 top-5 z-10 rounded-full bg-brand-grenat px-3 py-1 text-xs font-semibold text-white shadow-soft">
           ${isAr ? 'جديد' : 'Nouveau'}
         </span>
         <div class="overflow-hidden rounded-[1.25rem] bg-white">
@@ -184,7 +184,7 @@ function createDynamicProductCard(prod: LiveProduct, locale: 'fr' | 'ar'): HTMLE
       </div>
       <div class="p-5">
         <div class="text-xs font-semibold uppercase tracking-brand text-brand-muted">${categoryLabel}</div>
-        <h3 class="mt-2 text-base font-semibold text-brand-charcoal sm:text-lg">${title}</h3>
+        <h3 class="mt-2 text-base font-semibold text-brand-navy sm:text-lg">${title}</h3>
         <div class="mt-4 flex items-end justify-between gap-4">
           <div>
             ${
@@ -192,11 +192,11 @@ function createDynamicProductCard(prod: LiveProduct, locale: 'fr' | 'ar'): HTMLE
                 ? `<div dir="ltr" class="inline-block whitespace-nowrap text-sm text-brand-muted line-through">${prod.oldPrice}</div>`
                 : ''
             }
-            <div dir="ltr" data-price-val class="inline-block whitespace-nowrap text-lg font-semibold text-brand-charcoal">
+            <div dir="ltr" data-price-val class="inline-block whitespace-nowrap text-lg font-bold text-brand-navy">
               ${prod.price}
             </div>
           </div>
-          <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand-cognac group-hover:text-brand-charcoal">
+          <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand-navy group-hover:text-brand-grenat transition-colors">
             ${detailLabel}
             <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current ${isAr ? 'rotate-180' : ''}">
               <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />

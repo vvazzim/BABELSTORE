@@ -1,39 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <!-- Background Gradient (Deep Espresso Noir) -->
+    <!-- Background Gradient (Deep Royal Midnight Navy) -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2D231E"/>
-      <stop offset="60%" stop-color="#1B1615"/>
-      <stop offset="100%" stop-color="#110E0D"/>
+      <stop offset="0%" stop-color="#14213D"/>
+      <stop offset="50%" stop-color="#0B132B"/>
+      <stop offset="100%" stop-color="#060A17"/>
+    </linearGradient>
+
+    <!-- Imperial Grenat / Garnet Bordeaux Accent -->
+    <linearGradient id="grenatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9E1B32"/>
+      <stop offset="60%" stop-color="#780016"/>
+      <stop offset="100%" stop-color="#4A000E"/>
     </linearGradient>
 
     <!-- Champagne Gold Gradient -->
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F2DFB8"/>
-      <stop offset="50%" stop-color="#C49B55"/>
-      <stop offset="100%" stop-color="#9C7532"/>
+      <stop offset="0%" stop-color="#F5E5C9"/>
+      <stop offset="50%" stop-color="#C5A880"/>
+      <stop offset="100%" stop-color="#9E7E52"/>
     </linearGradient>
 
-    <!-- Warm Cashmere Ceramic Gradient -->
+    <!-- Sculptural Porcelain 'B' Gradient -->
     <linearGradient id="ceramicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="65%" stop-color="#F3ECE1"/>
-      <stop offset="100%" stop-color="#E2D6C3"/>
+      <stop offset="65%" stop-color="#F1F5F9"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+
+    <!-- Sapphire Blue Rim Glow -->
+    <linearGradient id="blueGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#2563EB"/>
     </linearGradient>
 
     <!-- Drop Shadow -->
     <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
   </defs>
 
-  <!-- Circular Base Badge -->
-  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
-  <circle cx="256" cy="256" r="226" fill="none" stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.6"/>
+  <!-- Circular Base Badge (Deep Midnight Navy) -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="3.5"/>
+  <circle cx="256" cy="256" r="228" fill="none" stroke="url(#grenatGrad)" stroke-width="1.8" opacity="0.85"/>
+  <circle cx="256" cy="256" r="220" fill="none" stroke="url(#goldGrad)" stroke-width="0.8" stroke-dasharray="6,4" opacity="0.4"/>
 
   <!-- Sculptural Monogram 'B' -->
   <g filter="url(#softShadow)" transform="translate(156, 100)">
-    <!-- Main stem -->
+    <!-- Main stem in pristine porcelain -->
     <path d="M 30,20 L 30,200 C 30,206 34,210 40,210 L 95,210 C 145,210 180,185 180,145 C 180,120 162,102 140,95 C 158,88 172,72 172,50 C 172,16 140,0 95,0 L 40,0 C 34,0 30,4 30,10 Z" 
           fill="url(#ceramicGrad)"/>
     
@@ -45,15 +59,18 @@
     <path d="M 62,118 L 98,118 C 128,118 150,130 150,154 C 150,178 128,190 98,190 L 62,190 Z" 
           fill="url(#bgGrad)"/>
 
-    <!-- Champagne Gold Accent Curve -->
+    <!-- Imperial Grenat Accent Ribbon Curve -->
     <path d="M 140,95 C 152,98 165,108 172,122 C 160,118 145,116 132,118 Z" 
-          fill="url(#goldGrad)"/>
+          fill="url(#grenatGrad)"/>
+
+    <!-- Fine Sapphire Blue Edge Accent -->
+    <path d="M 30,20 L 30,200" stroke="url(#blueGlow)" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
   </g>
 
   <!-- Brand Typography -->
   <text x="256" y="380" 
         text-anchor="middle" 
-        font-family="'Playfair Display', 'Cinzel', 'Georgia', 'Times New Roman', serif" 
+        font-family="'Playfair Display', 'Cinzel', 'Georgia', serif" 
         font-size="44" 
         font-weight="700" 
         letter-spacing="12" 
@@ -61,14 +78,14 @@
 
   <text x="256" y="420" 
         text-anchor="middle" 
-        font-family="'Montserrat', 'Inter', 'Helvetica Neue', sans-serif" 
+        font-family="'Montserrat', 'Inter', sans-serif" 
         font-size="16" 
-        font-weight="500" 
+        font-weight="600" 
         letter-spacing="10" 
-        fill="#EDE3D5" 
-        opacity="0.9">STORE</text>
+        fill="#F8FAFC" 
+        opacity="0.95">STORE</text>
 
-  <!-- Stars / Accent dots -->
-  <circle cx="150" cy="415" r="2.5" fill="url(#goldGrad)"/>
-  <circle cx="362" cy="415" r="2.5" fill="url(#goldGrad)"/>
+  <!-- Stars / Accent jewels (Grenat & Gold) -->
+  <circle cx="150" cy="415" r="3" fill="url(#grenatGrad)"/>
+  <circle cx="362" cy="415" r="3" fill="url(#grenatGrad)"/>
 </svg>

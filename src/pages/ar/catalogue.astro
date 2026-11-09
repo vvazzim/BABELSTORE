@@ -73,13 +73,13 @@ const sections = catalogProducts.length > 4 ? [
           </label>
 
           <div id="filters" class="flex flex-wrap gap-3">
-            <button class="rounded-full border border-brand-gold/40 bg-white px-4 py-2 text-sm font-medium text-brand-charcoal" data-filter="all">
+            <button class="rounded-full border border-brand-navy bg-brand-navy px-4 py-2 text-sm font-semibold text-white shadow-sm transition" data-filter="all">
               الكل
             </button>
             {categories.map((category) => (
               <button
                 id={category.slug}
-                class="rounded-full border border-brand-line bg-white/80 px-4 py-2 text-sm font-medium text-brand-muted hover:text-brand-charcoal"
+                class="rounded-full border border-brand-line bg-white px-4 py-2 text-sm font-medium text-brand-muted hover:border-brand-grenat hover:text-brand-grenat transition"
                 data-filter={category.slug}
               >
                 {category.nameAr || category.name}
@@ -133,11 +133,11 @@ const sections = catalogProducts.length > 4 ? [
 
       const setActive = (button) => {
         buttons.forEach((btn) => {
-          btn.classList.remove('border-brand-gold/40', 'text-brand-charcoal');
-          btn.classList.add('border-brand-line', 'text-brand-muted');
+          btn.classList.remove('border-brand-navy', 'bg-brand-navy', 'text-white', 'shadow-sm');
+          btn.classList.add('border-brand-line', 'bg-white', 'text-brand-muted');
         });
-        button.classList.remove('border-brand-line', 'text-brand-muted');
-        button.classList.add('border-brand-gold/40', 'text-brand-charcoal');
+        button.classList.remove('border-brand-line', 'bg-white', 'text-brand-muted');
+        button.classList.add('border-brand-navy', 'bg-brand-navy', 'text-white', 'shadow-sm');
       };
 
       const applyFilters = () => {

@@ -39,7 +39,7 @@ const cardImages = product.images.slice(0, 2);
         <span
           class:list={[
             'absolute left-5 top-5 z-10 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-soft',
-            badge.tone === 'sale' ? 'bg-red-500' : badge.tone === 'best' ? 'bg-amber-500' : 'bg-brand-charcoal'
+            badge.tone === 'sale' ? 'bg-brand-grenat' : badge.tone === 'best' ? 'bg-brand-navy' : 'bg-brand-navy'
           ]}
         >
           {badge.label}
@@ -63,7 +63,7 @@ const cardImages = product.images.slice(0, 2);
 
     <div class="p-5">
       <div class="text-xs font-semibold uppercase tracking-brand text-brand-muted">{categoryLabel}</div>
-      <h3 class="mt-2 text-base font-semibold text-brand-charcoal sm:text-lg">{title}</h3>
+      <h3 class="mt-2 text-base font-semibold text-brand-navy sm:text-lg">{title}</h3>
 
       {availableColors.length > 0 && (
         <p class="mt-2 text-sm text-brand-muted">
@@ -78,11 +78,11 @@ const cardImages = product.images.slice(0, 2);
               {product.oldPrice}
             </div>
           )}
-          <div dir="ltr" data-price-val class="inline-block whitespace-nowrap text-lg font-semibold text-brand-charcoal">
+          <div dir="ltr" data-price-val class="inline-block whitespace-nowrap text-lg font-bold text-brand-navy">
             {product.price}
           </div>
         </div>
-        <span class="inline-flex items-center rounded-full bg-brand-charcoal px-4 py-2 text-sm font-semibold text-white transition duration-200 group-hover:bg-brand-cognac">
+        <span class="inline-flex items-center rounded-full bg-brand-navy px-4 py-2 text-sm font-semibold text-white shadow-sm transition duration-200 group-hover:bg-brand-grenat">
           {detailLabel}
         </span>
       </div>
