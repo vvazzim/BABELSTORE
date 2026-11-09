@@ -27,8 +27,8 @@ export const siteData: SiteData = {
     },
     {
       label: 'Facebook',
-      handle: 'Buble Store DZ',
-      href: 'https://www.facebook.com/bublestore.dz'
+      handle: 'BUBLE STORE',
+      href: 'https://www.facebook.com/people/BUBLE-STORE/61596175466412/'
     }
   ],
   heroBadge: 'BUBLE STORE DZ | Livraison 58 Wilayas | Paiement à la livraison',
@@ -92,8 +92,8 @@ export const arabicSiteData: SiteData = {
     },
     {
       label: 'Facebook',
-      handle: 'Buble Store DZ',
-      href: 'https://www.facebook.com/bublestore.dz'
+      handle: 'BUBLE STORE',
+      href: 'https://www.facebook.com/people/BUBLE-STORE/61596175466412/'
     }
   ],
   heroBadge: 'BUBLE STORE DZ | توصيل لكافة الولايات | الدفع بعد المعاينة',
