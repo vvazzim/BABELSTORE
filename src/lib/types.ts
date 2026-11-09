@@ -27,6 +27,7 @@ export interface SiteData {
   secondaryCTA: CTA;
   socialLinks: SocialLink[];
   heroBadge?: string;
+  email?: string;
   trustItems: TrustItem[];
 }
 

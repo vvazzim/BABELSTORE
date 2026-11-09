@@ -32,6 +32,7 @@ export const siteData: SiteData = {
     }
   ],
   heroBadge: 'BABEL STORE | Livraison 58 Wilayas | Paiement a la livraison',
+  email: 'babel.store.off@gmail.com',
   trustItems: [
     {
       title: 'Livraison 58 Wilayas',
@@ -96,6 +97,7 @@ export const arabicSiteData: SiteData = {
     }
   ],
   heroBadge: 'متجر بابل | توصيل لكافة الولايات | الدفع بعد المعاينة',
+  email: 'babel.store.off@gmail.com',
   trustItems: [
     {
       title: 'توصيل سريع 58 ولاية',
