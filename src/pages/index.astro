@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/Hero.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { getAvailableColors, getCatalogProducts, getNewArrivalProducts, getPopularProducts, getPromotionProducts, getProducts } from '../lib/product-source';
@@ -11,12 +12,14 @@ const popularProducts = getPopularProducts(catalogProducts);
 const newProducts = getNewArrivalProducts(catalogProducts);
 ---
 
-<MainLayout title="Accueil" description="Produits utiles, fiables et sélectionnés avec soin pour faciliter votre quotidien.">
-  <section class="section-shell pt-8">
-    <div class="container-shell space-y-12">
+<MainLayout title="Accueil" description="BABEL STORE - Sélection exclusive de produits tendance, pratiques et élégants pour le quotidien en Algérie.">
+  <Hero locale="fr" />
+
+  <section class="section-shell pt-4">
+    <div class="container-shell space-y-14">
       {promotions.length > 0 && (
         <section>
-          <SectionTitle eyebrow="Promotions" title="Produits en solde" copy="Les produits en réduction à liquider en priorité." />
+          <SectionTitle eyebrow="Offres Spéciales" title="Sélection en Promotion" copy="Profitez de nos réductions exclusives du moment." />
           <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {promotions.map((product) => (
               <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
@@ -26,7 +29,7 @@ const newProducts = getNewArrivalProducts(catalogProducts);
       )}
 
       <section>
-        <SectionTitle eyebrow="Produits les plus demandés" title="Produits populaires" copy="Ce que les clients choisissent le plus en ce moment." />
+        <SectionTitle eyebrow="Nos Meilleurs Choix" title="Produits Populaires" copy="Ce que nos clients en Algérie choisissent et recommandent le plus." />
         <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {popularProducts.map((product) => (
             <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
@@ -35,7 +38,7 @@ const newProducts = getNewArrivalProducts(catalogProducts);
       </section>
 
       <section>
-        <SectionTitle eyebrow="Nouveautés" title="Les derniers produits ajoutés" copy="Les nouvelles références apparaissent ici automatiquement." />
+        <SectionTitle eyebrow="Nouveautés" title="Dernières Tendances" copy="Découvrez les nouvelles références fraîchement arrivées dans le catalogue." />
         <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {newProducts.map((product) => (
             <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
@@ -43,21 +46,54 @@ const newProducts = getNewArrivalProducts(catalogProducts);
         </div>
       </section>
 
-      <section class="card-shell p-8 sm:p-10">
-        <h2 class="text-2xl font-semibold text-brand-charcoal">Votre confiance est notre priorité</h2>
-        <p class="mt-4 max-w-4xl text-sm leading-7 text-brand-muted sm:text-base">
-          Chez Cozy Space DZ, nous nous engageons à vous offrir des produits utiles, fiables et de qualité, sélectionnés avec soin pour faciliter votre quotidien.
-        </p>
-        <ul class="mt-6 grid gap-3 text-sm text-brand-muted sm:grid-cols-2">
-          <li>• Livraison rapide dans toute l’Algérie</li>
-          <li>• Paiement à la livraison</li>
-          <li>• Possibilité de vérifier le produit avant de payer</li>
-          <li>• Service client disponible et à votre écoute</li>
-        </ul>
-        <p class="mt-6 max-w-4xl text-sm leading-7 text-brand-muted sm:text-base">
-          Votre satisfaction est au cœur de notre mission. Nous faisons de notre mieux pour vous offrir une expérience simple, sécurisée et agréable.
-        </p>
-        <a href="mailto:cozyspace.dz@gmail.com?subject=Réclamation%20Cozy%20Space%20DZ" class="btn-primary mt-6">Faire une réclamation</a>
+      <!-- Reassurance Section BABEL STORE -->
+      <section class="relative overflow-hidden rounded-[2.5rem] border border-[#DFD3C0] bg-gradient-to-br from-[#FAF5EE] to-[#EFE4D6] p-8 sm:p-12">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-cognac/30 bg-white/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-cognac">
+            Engagement Qualité
+          </span>
+          <h2 class="mt-4 text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+            L'Expérience Shopping BABEL STORE
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-brand-muted sm:text-base">
+            Chez Babel Store, chaque article est rigoureusement sélectionné et testé pour répondre à vos exigences de qualité, d'élégance et de praticité. Nous vous accompagnons de la commande jusqu'à la livraison à domicile.
+          </p>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">🚚</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">Livraison Rapide 58 Wilayas</h3>
+              <p class="mt-1 text-xs text-brand-muted">Expédition sécurisée avec appel de confirmation avant livraison.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">💵</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">Paiement à la Livraison (COD)</h3>
+              <p class="mt-1 text-xs text-brand-muted">Vous réglez en espèces directement au livreur à la réception.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">🔍</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">Vérification Avant Paiement</h3>
+              <p class="mt-1 text-xs text-brand-muted">Ouvrez et inspectez votre colis en toute sérénité avant de payer.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">📞</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">Service Client Réactif 7j/7</h3>
+              <p class="mt-1 text-xs text-brand-muted">Une équipe dédiée joignable pour répondre à toutes vos questions.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="/catalogue" class="btn-primary !bg-brand-charcoal hover:!bg-brand-cognac !text-brand-goldsoft !px-7 !py-3">
+              Explorer tout le catalogue
+            </a>
+            <a href="/contact" class="btn-secondary !border-[#DFD3C0] !bg-white">
+              Contacter le service client
+            </a>
+          </div>
+        </div>
       </section>
     </div>
   </section>

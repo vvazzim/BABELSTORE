@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/Hero.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { getAvailableColors, getCatalogProducts, getNewArrivalProducts, getPopularProducts, getProducts, getPromotionProducts } from '../../lib/product-source';
@@ -11,12 +12,14 @@ const popularProducts = getPopularProducts(catalogProducts);
 const newProducts = getNewArrivalProducts(catalogProducts);
 ---
 
-<MainLayout locale="ar" title="الرئيسية" description="منتجات مفيدة وموثوقة مختارة بعناية لتسهيل حياتك اليومية.">
-  <section class="section-shell pt-8">
-    <div class="container-shell space-y-12">
+<MainLayout locale="ar" title="الرئيسية" description="متجر بابل - تشكيلة مختارة من أحدث المنتجات العصرية والعملية بأعلى معايير الجودة في الجزائر.">
+  <Hero locale="ar" />
+
+  <section class="section-shell pt-4">
+    <div class="container-shell space-y-14">
       {promotions.length > 0 && (
         <section>
-          <SectionTitle eyebrow="العروض" title="منتجات مخفضة" copy="المنتجات المخفضة تظهر هنا بشكل تلقائي." />
+          <SectionTitle eyebrow="العروض الحصرية" title="منتجات مخفضة" copy="استفد من أفضل التخفيضات المميزة في متجر بابل." />
           <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {promotions.map((product) => (
               <ProductCard
@@ -34,9 +37,9 @@ const newProducts = getNewArrivalProducts(catalogProducts);
 
       <section>
         <SectionTitle
-          eyebrow="المنتجات الأكثر طلباً"
-          title="منتجات مطلوبة"
-          copy="المنتجات التي يشتريها العملاء أكثر في الوقت الحالي."
+          eyebrow="الخيارات الأكثر طلباً"
+          title="المنتجات الأكثر مبيعاً"
+          copy="تشكيلة يختارها ويثق بها عملاؤنا في كافة ولايات الوطن."
         />
         <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {popularProducts.map((product) => (
@@ -53,7 +56,7 @@ const newProducts = getNewArrivalProducts(catalogProducts);
       </section>
 
       <section>
-        <SectionTitle eyebrow="منتجات جديدة" title="آخر الإضافات" copy="المنتجات الجديدة تضاف هنا تلقائياً عند إدخالها." />
+        <SectionTitle eyebrow="وصل حديثاً" title="أحدث الاتجاهات" copy="منتجات جديدة ومبتكرة تضاف باستمرار لتلبية احتياجاتكم." />
         <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {newProducts.map((product) => (
             <ProductCard
@@ -68,23 +71,54 @@ const newProducts = getNewArrivalProducts(catalogProducts);
         </div>
       </section>
 
-      <section class="card-shell p-8 sm:p-10">
-        <h2 class="text-2xl font-semibold text-brand-charcoal">ثقتكم هي أولويتنا</h2>
-        <p class="mt-4 max-w-4xl text-sm leading-8 text-brand-muted sm:text-base">
-          في Cozy Space DZ، نلتزم بتقديم منتجات مفيدة، موثوقة وعالية الجودة، تم اختيارها بعناية لتسهيل حياتك اليومية.
-        </p>
-        <ul class="mt-6 space-y-3 text-sm leading-8 text-brand-muted sm:text-base">
-          <li>• توصيل سريع إلى جميع ولايات الجزائر.</li>
-          <li>• الدفع عند الاستلام.</li>
-          <li>• إمكانية التحقق من المنتج قبل الدفع.</li>
-          <li>• خدمة عملاء متوفرة للاستماع ومساعدتك.</li>
-        </ul>
-        <p class="mt-6 max-w-4xl text-sm leading-8 text-brand-muted sm:text-base">
-          رضاكم في صميم مهمتنا. نبذل كل ما بوسعنا لتقديم تجربة بسيطة، آمنة ومريحة.
-        </p>
-        <a href="mailto:cozyspace.dz@gmail.com?subject=Réclamation%20Cozy%20Space%20DZ" class="btn-primary mt-6">
-          إرسال شكوى
-        </a>
+      <!-- Reassurance Section BABEL STORE (Arabic) -->
+      <section class="relative overflow-hidden rounded-[2.5rem] border border-[#DFD3C0] bg-gradient-to-br from-[#FAF5EE] to-[#EFE4D6] p-8 sm:p-12">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-cognac/30 bg-white/80 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-cognac">
+            ثقتكم أولويتنا
+          </span>
+          <h2 class="mt-4 text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+            تجربة تسوق موثوقة ومريحة مع متجر بابل
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-brand-muted sm:text-base">
+            في متجر بابل، نلتزم باختيار وتجربة كل منتج بعناية لنضمن لكم جودة تدوم وتلبي تطلعاتكم. نسهر على خدمتكم بكل أمان من لحظة الطلب حتى استلام الطرد عند باب منزلكم.
+          </p>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">🚚</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">شحن سريع لـ 58 ولاية</h3>
+              <p class="mt-1 text-xs text-brand-muted">توصيل آمن إلى باب داركم مع تأكيد فوري ومسبق عبر الهاتف.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">💵</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">الدفع عند الاستلام</h3>
+              <p class="mt-1 text-xs text-brand-muted">ادفع نقداً بكل راحة بال عند استلام طلبيتك وفحصها.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">🔍</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">المعاينة قبل الدفع</h3>
+              <p class="mt-1 text-xs text-brand-muted">يحق لك فتح الطرد والتأكد من مطابقة وجودة المنتج قبل تسليم المبلغ.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/70 bg-white/70 p-5 shadow-sm backdrop-blur">
+              <div class="text-xl">📞</div>
+              <h3 class="mt-2 text-sm font-bold text-brand-charcoal">خدمة عملاء 7 أيام / 7</h3>
+              <p class="mt-1 text-xs text-brand-muted">فريق متجاوب عبر الهاتف وواتساب لمرافقتكم والإجابة عن كل استفسار.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="/ar/catalogue" class="btn-primary !bg-brand-charcoal hover:!bg-brand-cognac !text-brand-goldsoft !px-7 !py-3">
+              تصفح التشكيلة الكاملة
+            </a>
+            <a href="/ar/contact" class="btn-secondary !border-[#DFD3C0] !bg-white">
+              تواصل مع خدمة العملاء
+            </a>
+          </div>
+        </div>
       </section>
     </div>
   </section>
