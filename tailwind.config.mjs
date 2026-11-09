@@ -5,25 +5,26 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#F8F5EE',
+          bg: '#F5EFE6',
           surface: '#FFFFFF',
-          pearl: '#EDE6DA',
-          burgundy: '#6A162B',
-          burgundydark: '#4E0F1E',
-          burgundysoft: '#F6EBEE',
+          pearl: '#E2D6C3',
+          sand: '#EAE0D0',
+          cognac: '#B26122',
+          cognacdark: '#8D4713',
+          cognacsoft: '#FAEDE3',
           cool: '#C7CFD0',
-          ink: '#1A1617',
-          charcoal: '#2D2627',
-          muted: '#6E6462',
-          gold: '#C5A059',
-          goldsoft: '#F4ECD8',
+          ink: '#1A1615',
+          charcoal: '#28211E',
+          muted: '#736862',
+          gold: '#C49B55',
+          goldsoft: '#F7EEDD',
           amber: '#D9883B',
-          line: '#E7DFD4'
+          line: '#E3D8C8'
         }
       },
       boxShadow: {
-        soft: '0 14px 34px rgba(45, 38, 39, 0.07), 0 2px 10px rgba(26, 22, 23, 0.04)',
-        premium: '0 24px 60px rgba(78, 15, 30, 0.22), 0 6px 18px rgba(26, 22, 23, 0.08)'
+        soft: '0 14px 34px rgba(40, 33, 30, 0.06), 0 2px 10px rgba(26, 22, 21, 0.03)',
+        premium: '0 24px 60px rgba(40, 33, 30, 0.22), 0 6px 18px rgba(26, 22, 21, 0.08)'
       },
       borderRadius: {
         '4xl': '2rem'
@@ -32,9 +33,9 @@ export default {
         brand: '0.12em'
       },
       backgroundImage: {
-        'babel-hero': 'radial-gradient(ellipse at 75% 25%, rgba(197, 160, 89, 0.25) 0%, transparent 60%), linear-gradient(135deg, #3A101C 0%, #201317 60%, #151012 100%)',
-        'babel-card': 'linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%)',
-        'cozy-hero': 'radial-gradient(ellipse at 75% 25%, rgba(197, 160, 89, 0.25) 0%, transparent 60%), linear-gradient(135deg, #3A101C 0%, #201317 60%, #151012 100%)'
+        'babel-hero': 'radial-gradient(ellipse at 78% 22%, rgba(196, 155, 85, 0.28) 0%, transparent 60%), linear-gradient(135deg, #2A211D 0%, #1A1615 65%, #120F0E 100%)',
+        'babel-card': 'linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 100%)',
+        'cozy-hero': 'radial-gradient(ellipse at 78% 22%, rgba(196, 155, 85, 0.28) 0%, transparent 60%), linear-gradient(135deg, #2A211D 0%, #1A1615 65%, #120F0E 100%)'
       }
     }
   },

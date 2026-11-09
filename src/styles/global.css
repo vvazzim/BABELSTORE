@@ -14,9 +14,9 @@
   body {
     @apply bg-brand-bg font-sans text-brand-ink antialiased;
     background-image:
-      radial-gradient(circle at top left, rgba(197, 160, 89, 0.10), transparent 28%),
-      radial-gradient(circle at right 20%, rgba(106, 22, 43, 0.05), transparent 22%),
-      linear-gradient(180deg, #FAF7F2 0%, #F5F0E8 100%);
+      radial-gradient(circle at top left, rgba(196, 155, 85, 0.12), transparent 32%),
+      radial-gradient(circle at right 22%, rgba(178, 97, 34, 0.07), transparent 26%),
+      linear-gradient(180deg, #F8F3EA 0%, #F3ECDF 100%);
     background-attachment: scroll;
   }
 
@@ -52,7 +52,11 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-brand-burgundy px-6 py-3 text-sm font-semibold tracking-wide text-brand-goldsoft shadow-premium hover:-translate-y-0.5 hover:bg-brand-burgundydark hover:text-white;
+    @apply inline-flex items-center justify-center rounded-full bg-brand-charcoal px-6 py-3 text-sm font-semibold tracking-wide text-brand-goldsoft shadow-premium hover:-translate-y-0.5 hover:text-white;
+    transition: all 0.2s ease-in-out;
+  }
+  .btn-primary:hover {
+    background-color: #B26122;
   }
 
   .btn-secondary {

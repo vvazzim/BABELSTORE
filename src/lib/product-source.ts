@@ -7,7 +7,7 @@ const PRODUCTS_FEED_URL =
 const SPREADSHEET_ID =
   import.meta.env.GOOGLE_SPREADSHEET_ID ||
   import.meta.env.PUBLIC_GOOGLE_SPREADSHEET_ID ||
-  '1Do4iJU8TdtvwmODoH_ypc1xdrZTouUCxhOxVQTJK_do';
+  '';
 
 const parseCsv = (csvText: string): Record<string, unknown>[] => {
   const lines: string[] = [];

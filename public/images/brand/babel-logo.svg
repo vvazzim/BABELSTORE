@@ -1,35 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <!-- Background Gradient -->
+    <!-- Background Gradient (Deep Espresso Noir) -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3A101C"/>
-      <stop offset="60%" stop-color="#231317"/>
-      <stop offset="100%" stop-color="#140E10"/>
+      <stop offset="0%" stop-color="#2D231E"/>
+      <stop offset="60%" stop-color="#1B1615"/>
+      <stop offset="100%" stop-color="#110E0D"/>
     </linearGradient>
 
     <!-- Champagne Gold Gradient -->
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EED59B"/>
-      <stop offset="50%" stop-color="#C5A059"/>
-      <stop offset="100%" stop-color="#9E7B3B"/>
+      <stop offset="0%" stop-color="#F2DFB8"/>
+      <stop offset="50%" stop-color="#C49B55"/>
+      <stop offset="100%" stop-color="#9C7532"/>
     </linearGradient>
 
-    <!-- Warm Ceramic Gradient -->
+    <!-- Warm Cashmere Ceramic Gradient -->
     <linearGradient id="ceramicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="70%" stop-color="#F4ECE1"/>
-      <stop offset="100%" stop-color="#DDD3C3"/>
+      <stop offset="65%" stop-color="#F3ECE1"/>
+      <stop offset="100%" stop-color="#E2D6C3"/>
     </linearGradient>
 
     <!-- Drop Shadow -->
     <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
   </defs>
 
   <!-- Circular Base Badge -->
   <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
-  <circle cx="256" cy="256" r="226" fill="none" stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.65"/>
+  <circle cx="256" cy="256" r="226" fill="none" stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.6"/>
 
   <!-- Sculptural Monogram 'B' -->
   <g filter="url(#softShadow)" transform="translate(156, 100)">
@@ -45,7 +45,7 @@
     <path d="M 62,118 L 98,118 C 128,118 150,130 150,154 C 150,178 128,190 98,190 L 62,190 Z" 
           fill="url(#bgGrad)"/>
 
-    <!-- Gold Ribbon / Arc Accent -->
+    <!-- Champagne Gold Accent Curve -->
     <path d="M 140,95 C 152,98 165,108 172,122 C 160,118 145,116 132,118 Z" 
           fill="url(#goldGrad)"/>
   </g>
@@ -65,7 +65,7 @@
         font-size="16" 
         font-weight="500" 
         letter-spacing="10" 
-        fill="#EDE6DA" 
+        fill="#EDE3D5" 
         opacity="0.9">STORE</text>
 
   <!-- Stars / Accent dots -->
