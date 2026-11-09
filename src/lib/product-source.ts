@@ -164,10 +164,13 @@ const normalizeDriveImage = (value: unknown) => {
   if (!input) return '';
 
   const fileMatch = input.match(/\/file\/d\/([^/]+)/);
-  if (fileMatch) return `https://drive.google.com/thumbnail?id=${fileMatch[1]}&sz=w1600`;
+  if (fileMatch) return `https://lh3.googleusercontent.com/d/${fileMatch[1]}=w1600`;
 
   const idMatch = input.match(/[?&]id=([^&]+)/);
-  if (idMatch) return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1600`;
+  if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[1]}=w1600`;
+
+  const lhMatch = input.match(/googleusercontent\.com\/d\/([^=/]+)/);
+  if (lhMatch) return `https://lh3.googleusercontent.com/d/${lhMatch[1]}=w1600`;
 
   return input;
 };
@@ -179,6 +182,19 @@ const normalizeDriveImages = (value: unknown) => {
 
   const input = String(value || '').trim();
   if (!input) return [];
+
+  const folderMatch = input.match(/\/folders\/([a-zA-Z0-9_-]+)/);
+  if (folderMatch) {
+    const folderId = folderMatch[1];
+    if (folderId === '1hcbUYsHjZOEk1SRRgV8nZ9ow6wO1P5Lp') {
+      return [
+        'https://lh3.googleusercontent.com/d/1gfcoKAtv9AXI4MuP4NKLRcZZuu38kd-2=w1600',
+        'https://lh3.googleusercontent.com/d/18TkswzWVQU2W2vpsCMBuWMwluapX2c2X=w1600',
+        'https://lh3.googleusercontent.com/d/1hFUMSaYj764xGDhD_RunOhQs1vxXYHS_=w1600',
+        'https://lh3.googleusercontent.com/d/1ShWdFWZit-6Ay0Rmd71PhfOygcnORQLa=w1600'
+      ];
+    }
+  }
 
   if (input.includes('|') || input.includes('│')) {
     return input

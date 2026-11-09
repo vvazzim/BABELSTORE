@@ -19,7 +19,7 @@ const popularProducts = getPopularProducts(catalogProducts);
 const newProducts = getNewArrivalProducts(catalogProducts);
 const promotionProducts = getPromotionProducts(catalogProducts);
 
-const sections = [
+const sections = catalogProducts.length > 4 ? [
   {
     id: 'popular',
     title: 'المنتجات الأكثر طلباً',
@@ -38,7 +38,14 @@ const sections = [
     copy: 'منتجات بتخفيضات.',
     products: promotionProducts
   }
-].filter((section) => section.products.length > 0);
+].filter((section) => section.products.length > 0) : [
+  {
+    id: 'all',
+    title: 'جميع المنتجات',
+    copy: 'تصفح تشكيلة منتجاتنا المتوفرة في المتجر',
+    products: catalogProducts
+  }
+];
 ---
 
 <MainLayout locale="ar" title="المنتجات" description="اكتشف منتجاتنا المختارة بعناية لتسهيل حياتك اليومية">
