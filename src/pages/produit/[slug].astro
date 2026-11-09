@@ -12,15 +12,7 @@ const productPageCopy: Record<
     kicker: string;
     description: string;
   }
-> = {
-  'miroir-lumineux-noir': {
-    title: 'Miroir LED pour voiture',
-    subtitle: 'Maquillage parfait partout',
-    kicker: 'Dites adieu au manque de lumière dans votre voiture.',
-    description:
-      'Ce miroir LED vous offre un éclairage parfait, où que vous soyez. Parfait pour les déplacements, le travail ou les sorties.'
-  }
-};
+> = {};
 
 export async function getStaticPaths() {
   const products = await getProducts();

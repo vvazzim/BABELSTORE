@@ -30,10 +30,10 @@ async function testLocalStorefrontPages() {
     '/catalogue',
     '/a-propos',
     '/contact',
-    '/produit/lampe-led-bois-intelligente',
+    '/produit/lampe-led-bois',
     '/ar',
     '/ar/catalogue',
-    '/ar/produit/lampe-led-bois-intelligente'
+    '/ar/produit/lampe-led-bois'
   ];
 
   for (const page of pages) {

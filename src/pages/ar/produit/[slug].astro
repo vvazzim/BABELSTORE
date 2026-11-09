@@ -12,15 +12,7 @@ const productPageCopy: Record<
     kicker: string;
     description: string;
   }
-> = {
-  'miroir-lumineux-noir': {
-    title: 'مرآة LED للسيارة',
-    subtitle: 'مكياج مثالي في أي وقت',
-    kicker: 'وداعاً لضعف الإضاءة داخل السيارة.',
-    description:
-      'توفر لك هذه المرآة إضاءة مثالية أينما كنتِ، مثالية للتنقل، العمل أو الخروج.'
-  }
-};
+> = {};
 
 export async function getStaticPaths() {
   const products = await getProducts();

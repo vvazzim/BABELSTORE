@@ -96,26 +96,61 @@ const fetchDirectGoogleSheetCsv = async (sheetId: string) => {
 const IS_DEV = import.meta.env.DEV;
 const PRODUCT_CACHE_TTL_MS = IS_DEV ? 0 : 60_000;
 
-const defaultProduct: Product = localProducts[0];
+const defaultProduct: Product = {
+  id: 'sheet-product',
+  slug: 'produit',
+  name: 'Produit Babel Store',
+  nameAr: 'منتج متجر بابل',
+  baseName: 'Produit Babel Store',
+  baseNameAr: 'منتج متجر بابل',
+  color: '',
+  colorAr: '',
+  variantGroup: '',
+  category: 'Général',
+  collection: 'Babel Collection',
+  collectionAr: 'تشكيلة بابل',
+  price: '0 DA',
+  images: ['/images/brand/babel-concept.jpg'],
+  shortDescription: '',
+  shortDescriptionAr: '',
+  features: [],
+  featuresAr: [],
+  reasons: [],
+  reasonsAr: [],
+  availability: 'Disponible',
+  availabilityAr: 'متوفر',
+  featured: false,
+  published: true,
+  tags: []
+};
 let cachedProductsPromise: Promise<Product[]> | null = null;
 let cachedProductsAt = 0;
 
+const cleanCellText = (val: unknown): string => {
+  let str = String(val ?? '').trim();
+  if (str.includes('│')) {
+    str = str.split('│')[0].trim();
+  }
+  return str;
+};
+
 const splitList = (value: unknown) =>
   String(value || '')
+    .replace(/│/g, '|')
     .split('|')
-    .map((item) => item.trim())
+    .map((item) => cleanCellText(item))
     .filter(Boolean);
 
 const splitColorList = (value: unknown) =>
   String(value || '')
     .split(/\s*[\/|,]\s*/)
-    .map((item) => item.trim())
+    .map((item) => cleanCellText(item))
     .filter(Boolean);
 
 const splitCategoryList = (value: unknown) =>
   String(value || '')
     .split(/\s*[\/|,]\s*/)
-    .map((item) => item.trim().toLowerCase())
+    .map((item) => cleanCellText(item).toLowerCase())
     .filter(Boolean);
 
 const normalizeBoolean = (value: unknown, fallback = false) => {
@@ -145,8 +180,9 @@ const normalizeDriveImages = (value: unknown) => {
   const input = String(value || '').trim();
   if (!input) return [];
 
-  if (input.includes('|')) {
+  if (input.includes('|') || input.includes('│')) {
     return input
+      .replace(/│/g, '|')
       .split('|')
       .map((item) => normalizeDriveImage(item))
       .filter(Boolean);
@@ -163,37 +199,37 @@ const normalizeProduct = (row: Record<string, unknown>, index: number): Product 
   const published = normalizeBoolean(row.published, true);
   const featured = normalizeBoolean(row.featured, false);
 
+  const rawName = cleanCellText(row.name || row.slug || `Produit ${index + 1}`);
+  const rawNameAr = cleanCellText(row.nameAr);
+  const baseName = cleanCellText(row.baseName || rawName);
+  const baseNameAr = cleanCellText(row.baseNameAr || rawNameAr);
+  const rawDesc = cleanCellText(row.shortDescription);
+  const rawDescAr = cleanCellText(row.shortDescriptionAr);
+
   return {
-    id: String(row.id || `sheet-product-${index + 1}`),
-    slug: String(row.slug || `produit-${index + 1}`),
-    name: String(row.name || defaultProduct.name),
-    nameAr: String(row.nameAr || ''),
-    baseName: String(row.baseName || row.name || defaultProduct.baseName || defaultProduct.name),
-    baseNameAr: String(row.baseNameAr || ''),
-    color: String(row.color || ''),
-    colorAr: String(row.colorAr || ''),
-    variantGroup: String(row.variantGroup || ''),
-    category: String(row.category || defaultProduct.category),
-    collection: String(row.collection || defaultProduct.collection),
-    collectionAr: String(row.collectionAr || ''),
-    price: String(row.price || defaultProduct.price),
-    oldPrice: String(row.oldPrice || ''),
+    id: cleanCellText(row.id || `sheet-product-${index + 1}`),
+    slug: cleanCellText(row.slug || `produit-${index + 1}`),
+    name: rawName || defaultProduct.name,
+    nameAr: rawNameAr,
+    baseName: baseName || rawName || defaultProduct.baseName,
+    baseNameAr: baseNameAr,
+    color: cleanCellText(row.color),
+    colorAr: cleanCellText(row.colorAr),
+    variantGroup: cleanCellText(row.variantGroup),
+    category: cleanCellText(row.category) || defaultProduct.category,
+    collection: cleanCellText(row.collection) || defaultProduct.collection,
+    collectionAr: cleanCellText(row.collectionAr),
+    price: cleanCellText(row.price) || defaultProduct.price,
+    oldPrice: cleanCellText(row.oldPrice),
     images: images.length ? images : defaultProduct.images,
-    shortDescription: String(row.shortDescription || defaultProduct.shortDescription),
-    shortDescriptionAr: String(row.shortDescriptionAr || ''),
-    features: splitList(row.features).length ? splitList(row.features) : defaultProduct.features,
+    shortDescription: rawDesc || defaultProduct.shortDescription,
+    shortDescriptionAr: rawDescAr,
+    features: splitList(row.features),
     featuresAr: splitList(row.featuresAr),
     reasons: splitList(row.reasons),
     reasonsAr: splitList(row.reasonsAr),
-    availability: String(
-      row.availability ||
-        (typeof quantity === 'number'
-          ? quantity > 0
-            ? 'Disponible'
-            : 'Rupture de stock'
-          : defaultProduct.availability)
-    ),
-    availabilityAr: String(row.availabilityAr || ''),
+    availability: cleanCellText(row.availability) || (typeof quantity === 'number' ? (quantity > 0 ? 'Disponible' : 'Rupture de stock') : 'Disponible'),
+    availabilityAr: cleanCellText(row.availabilityAr) || (typeof quantity === 'number' ? (quantity > 0 ? 'متوفر' : 'غير متوفر') : 'متوفر'),
     quantity,
     published,
     featured,
@@ -324,17 +360,12 @@ export const getProducts = async () => {
     cachedProductsPromise = (async () => {
       const sheetProducts = await fetchSheetProducts();
       if (sheetProducts && sheetProducts.length > 0) {
-        const combined = [...sheetProducts];
-        for (const lp of localProducts) {
-          if (!combined.some((sp) => sp.slug === lp.slug || sp.id === lp.id)) {
-            combined.push(lp);
-          }
-        }
-        return combined;
+        console.info(`[product-source] Returning ${sheetProducts.length} product(s) directly from Google Sheet.`);
+        return sheetProducts;
       }
 
-      console.warn('[product-source] Falling back to local src/data/products.ts dataset.');
-      return localProducts;
+      console.warn('[product-source] No products returned from Google Sheet.');
+      return [];
     })();
 
     cachedProductsAt = now;
