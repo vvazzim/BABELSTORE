@@ -13,7 +13,11 @@ interface Props {
 const { productName, productSlug, productPrice = '', colors = [], embedded = false, locale = 'fr' } = Astro.props;
 const labels = uiText[locale].order;
 const submitUrl = "/.netlify/functions/submit-order";
-const directScriptUrl = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec';
+const directScriptUrl =
+  import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL ||
+  import.meta.env.GOOGLE_SCRIPT_URL ||
+  DEFAULT_SCRIPT_URL;
 const countryCodes = [
   { label: '+213  Algerie', value: '+213' },
   { label: '+33  France', value: '+33' },
@@ -336,8 +340,8 @@ const countryCodes = [
 
         if (response.ok && (!responseJson || responseJson.success !== false)) {
           responseOk = true;
-        } else if (response.status === 404 && directUrl) {
-          // Si la fonction serverless n'est pas déployée sur cet hébergeur (ex. Cloudflare Pages sans Netlify),
+        } else if (!response.ok && directUrl) {
+          // Si la fonction serverless n'est pas disponible sur cet hébergeur (ex. Render, Cloudflare Pages),
           // on envoie directement à Google Apps Script
           await fetch(directUrl, {
             method: 'POST',

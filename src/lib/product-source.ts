@@ -1,13 +1,22 @@
 import { products as localProducts } from '../data/products';
 import type { Product } from './types';
 
+export const DEFAULT_FEED_URL =
+  'https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec';
+
+export const DEFAULT_SPREADSHEET_ID = '1BJ_lZmNtQKoo9nLGgSkZbgPmIeK19xGQfNJHQqc4KNw';
+
 const PRODUCTS_FEED_URL =
-  import.meta.env.PRODUCTS_FEED_URL || import.meta.env.PUBLIC_PRODUCTS_FEED_URL || '';
+  import.meta.env.PRODUCTS_FEED_URL ||
+  import.meta.env.PUBLIC_PRODUCTS_FEED_URL ||
+  import.meta.env.GOOGLE_SCRIPT_URL ||
+  import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL ||
+  DEFAULT_FEED_URL;
 
 const SPREADSHEET_ID =
   import.meta.env.GOOGLE_SPREADSHEET_ID ||
   import.meta.env.PUBLIC_GOOGLE_SPREADSHEET_ID ||
-  '';
+  DEFAULT_SPREADSHEET_ID;
 
 const parseCsv = (csvText: string): Record<string, unknown>[] => {
   const lines: string[] = [];
@@ -283,6 +292,7 @@ const fetchSheetProducts = async () => {
 
     const response = await fetch(requestUrl.toString(), {
       headers: { Accept: 'application/json' },
+      redirect: 'follow',
       cache: 'no-store'
     });
 
@@ -380,8 +390,8 @@ export const getProducts = async () => {
         return sheetProducts;
       }
 
-      console.warn('[product-source] No products returned from Google Sheet.');
-      return [];
+      console.warn('[product-source] No products returned from Google Sheet. Using local backup.');
+      return localProducts.length > 0 ? localProducts : [];
     })();
 
     cachedProductsAt = now;

@@ -83,8 +83,13 @@ export const handler = async (event) => {
       }
     }
 
+    const DEFAULT_SCRIPT_URL =
+      'https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec';
+
     const googleScriptUrl =
-      process.env.GOOGLE_SCRIPT_URL || process.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
+      process.env.GOOGLE_SCRIPT_URL ||
+      process.env.PUBLIC_GOOGLE_SCRIPT_URL ||
+      DEFAULT_SCRIPT_URL;
 
     if (!googleScriptUrl) {
       return {
