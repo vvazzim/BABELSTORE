@@ -367,12 +367,12 @@ function normalizeSingleImageUrl_(input) {
 
   var fileMatch = url.match(/\/file\/d\/([^/?#]+)/);
   if (fileMatch) {
-    return 'https://drive.google.com/thumbnail?id=' + fileMatch[1] + '&sz=w1600';
+    return 'https://lh3.googleusercontent.com/d/' + fileMatch[1] + '=w1600';
   }
 
   var idMatch = url.match(/[?&]id=([^&]+)/);
   if (idMatch && url.indexOf('drive.google.com') !== -1) {
-    return 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w1600';
+    return 'https://lh3.googleusercontent.com/d/' + idMatch[1] + '=w1600';
   }
 
   return url;
@@ -406,7 +406,7 @@ function getPublicImagesFromFolder_(folderId) {
       if (isImage) {
         images.push({
           name: file.getName(),
-          url: 'https://drive.google.com/thumbnail?id=' + file.getId() + '&sz=w1600'
+          url: 'https://lh3.googleusercontent.com/d/' + file.getId() + '=w1600'
         });
       }
     }
