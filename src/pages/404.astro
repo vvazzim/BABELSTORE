@@ -1,0 +1,176 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Page non trouvée" description="BABEL STORE - Page non trouvée">
+  <!-- Container standard 404 -->
+  <div id="standard-404" class="section-shell min-h-[50vh] flex items-center justify-center py-20 text-center">
+    <div class="container-shell max-w-lg">
+      <div class="rounded-[2.5rem] border border-brand-line bg-white p-8 shadow-soft sm:p-12">
+        <span class="inline-block rounded-full bg-brand-pearl px-4 py-1 text-sm font-semibold text-brand-cognac">
+          Erreur 404
+        </span>
+        <h1 class="mt-4 text-3xl font-bold text-brand-charcoal sm:text-4xl">Page non trouvée</h1>
+        <p class="mt-3 text-sm text-brand-muted">
+          La page ou l'article que vous recherchez n'est pas disponible ou a été déplacé.
+        </p>
+        <div class="mt-8 flex justify-center gap-4">
+          <a href="/" class="btn-primary">Retour à l'accueil</a>
+          <a href="/catalogue" class="btn-secondary">Voir le catalogue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de chargement dynamique si l'URL est un produit récent -->
+  <div id="dynamic-product-loader" class="hidden section-shell py-12">
+    <div class="container-shell max-w-4xl text-center py-12">
+      <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-brand-charcoal border-r-transparent"></div>
+      <p class="mt-4 text-sm font-medium text-brand-charcoal">Synchronisation en direct du produit depuis Google Sheets...</p>
+    </div>
+  </div>
+
+  <!-- Container de rendu dynamique du produit -->
+  <div id="dynamic-product-view" class="hidden section-shell py-8">
+    <div class="container-shell max-w-5xl">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <!-- Galerie photos -->
+        <div class="space-y-4">
+          <div class="overflow-hidden rounded-3xl border border-brand-line bg-brand-pearl p-4">
+            <img id="dyn-main-img" src="" alt="" class="aspect-square w-full rounded-2xl object-cover" />
+          </div>
+          <div id="dyn-thumbnails" class="flex gap-3 overflow-x-auto pb-2"></div>
+        </div>
+
+        <!-- Détails & Commande -->
+        <div class="space-y-6">
+          <div>
+            <div id="dyn-category" class="text-xs font-semibold uppercase tracking-wider text-brand-muted"></div>
+            <h1 id="dyn-title" class="mt-2 text-2xl font-bold text-brand-charcoal sm:text-3xl"></h1>
+            <div class="mt-4 flex items-baseline gap-4">
+              <span id="dyn-old-price" class="text-base text-brand-muted line-through"></span>
+              <span id="dyn-price" class="text-3xl font-bold text-brand-charcoal"></span>
+            </div>
+          </div>
+
+          <div id="dyn-desc" class="text-sm leading-relaxed text-brand-charcoal"></div>
+
+          <!-- Points forts -->
+          <div id="dyn-features-box" class="hidden rounded-2xl border border-brand-line bg-brand-bg/50 p-5">
+            <h3 class="text-sm font-bold text-brand-charcoal">Points forts</h3>
+            <ul id="dyn-features-list" class="mt-3 space-y-2 text-sm text-brand-charcoal"></ul>
+          </div>
+
+          <!-- Bouton Commander -->
+          <div class="pt-4">
+            <button
+              id="dyn-order-btn"
+              class="w-full rounded-full bg-brand-charcoal py-4 text-base font-bold text-white shadow-soft transition hover:bg-brand-cognac"
+            >
+              Commander maintenant
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_FEED_URL =
+      'https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec';
+
+    (async () => {
+      const path = window.location.pathname;
+      const isProductPath = path.includes('/produit/');
+
+      if (!isProductPath) return;
+
+      const slugMatch = path.match(/\/produit\/([^\/?#]+)/);
+      if (!slugMatch || !slugMatch[1]) return;
+
+      const slug = slugMatch[1].trim();
+      const isAr = path.startsWith('/ar/');
+
+      const standard404 = document.getElementById('standard-404');
+      const loader = document.getElementById('dynamic-product-loader');
+      const view = document.getElementById('dynamic-product-view');
+
+      if (standard404) standard404.classList.add('hidden');
+      if (loader) loader.classList.remove('hidden');
+
+      try {
+        const res = await fetch(DEFAULT_FEED_URL, {
+          headers: { Accept: 'application/json' }
+        });
+        if (!res.ok) throw new Error('Feed error');
+
+        const data = await res.json();
+        const products = Array.isArray(data?.products) ? data.products : [];
+        const product = products.find((p: any) => String(p.slug || '').trim() === slug);
+
+        if (!product) {
+          if (loader) loader.classList.add('hidden');
+          if (standard404) standard404.classList.remove('hidden');
+          return;
+        }
+
+        // Remplissage dynamique du produit
+        if (loader) loader.classList.add('hidden');
+        if (view) view.classList.remove('hidden');
+
+        const title = isAr
+          ? product.baseNameAr || product.nameAr || product.name
+          : product.baseName || product.name;
+        const desc = isAr
+          ? product.shortDescriptionAr || product.shortDescription
+          : product.shortDescription || product.shortDescriptionAr;
+        const price = product.price || '';
+        const oldPrice = product.oldPrice || '';
+        const images = Array.isArray(product.images) && product.images.length
+          ? product.images
+          : (product.image ? [product.image] : ['/images/brand/babel-concept.jpg']);
+
+        const titleEl = document.getElementById('dyn-title');
+        if (titleEl) titleEl.textContent = title;
+
+        const categoryEl = document.getElementById('dyn-category');
+        if (categoryEl) categoryEl.textContent = product.category || 'Babel Store';
+
+        const priceEl = document.getElementById('dyn-price');
+        if (priceEl) priceEl.textContent = price;
+
+        const oldPriceEl = document.getElementById('dyn-old-price');
+        if (oldPriceEl) {
+          if (oldPrice) {
+            oldPriceEl.textContent = oldPrice;
+            oldPriceEl.classList.remove('hidden');
+          } else {
+            oldPriceEl.classList.add('hidden');
+          }
+        }
+
+        const descEl = document.getElementById('dyn-desc');
+        if (descEl) descEl.textContent = desc || '';
+
+        const mainImg = document.getElementById('dyn-main-img') as HTMLImageElement;
+        if (mainImg) {
+          mainImg.src = images[0];
+          mainImg.alt = title;
+        }
+
+        // Bouton commander : redirection vers le catalogue ou formulaire
+        const orderBtn = document.getElementById('dyn-order-btn');
+        if (orderBtn) {
+          orderBtn.addEventListener('click', () => {
+            const contactPhone = '+213550000000';
+            const message = encodeURIComponent(`Bonjour Babel Store, je souhaite commander : ${title} (${price}).`);
+            window.location.href = `/catalogue`;
+          });
+        }
+      } catch (err) {
+        if (loader) loader.classList.add('hidden');
+        if (standard404) standard404.classList.remove('hidden');
+      }
+    })();
+  </script>
+</MainLayout>

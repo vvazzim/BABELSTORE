@@ -165,4 +165,12 @@ const sections = catalogProducts.length > 4 ? [
       applyFilters();
     })();
   </script>
+
+  <script>
+    import { initLiveProductSync } from '../scripts/live-sync';
+    initLiveProductSync({
+      containerId: 'catalog-sections',
+      locale: 'fr'
+    });
+  </script>
 </MainLayout>

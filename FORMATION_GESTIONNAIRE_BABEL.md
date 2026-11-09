@@ -28,14 +28,37 @@ Babel Store fonctionne avec une architecture simple, robuste et autonome :
 - Dès qu'un client valide son panier sur le site, les informations (Nom, Téléphone, Wilaya, Adresse, Produit, Prix) sont envoyées **instantanément** dans votre Google Sheet dans l'onglet `Commandes`.
 - **Aucun délai, aucune manipulation requise** : votre tableau se met à jour en direct.
 
-### B. Les Produits (Ajouts, Modifications de prix, Stocks) :
-Le site Babel Store est un site statique ultra-performant (temps de chargement < 0.3s sur mobile 4G en Algérie). Les pages sont générées à partir du Google Sheet :
-- **En environnement local / test** : **Temps réel immédiat** à chaque actualisation de page.
-- **En production (site en ligne public)** : Les produits sont récupérés **à chaque déploiement (Build)** de l'hébergeur.
-  - **Délai après modification** : ~30 à 60 secondes une fois le déploiement lancé.
-  - **Comment actualiser le site en ligne après avoir modifié le Sheet ?**
-    1. **Option 1 (Recommandée - 1 clic)** : Allez sur le tableau de bord de votre hébergeur (Render / Netlify) et cliquez sur **"Deploy latest commit"** ou **"Trigger Deploy"**.
-    2. **Option 2 (Automatique par Webhook)** : Si un *Deploy Hook* est configuré dans Apps Script, chaque modification d'une ligne du Sheet relance automatiquement la mise à jour du site.
+### B. Les Produits (Ajouts, Prix, Stocks) : **DEUX NIVEAUX DE SYNCHRONISATION AUTOMATIQUE**
+
+1. **⚡ Niveau 1 - Synchronisation Directe Navigateur (Temps Réel - 0 seconde)** :
+   - Le site intègre un moteur de synchronisation en direct.
+   - Dès qu'un visiteur arrive sur l'accueil ou le catalogue, son navigateur interroge Google Sheets en arrière-plan.
+   - **Résultat** : Si vous venez d'ajouter un produit ou de modifier un prix dans le Sheet, le visiteur le voit **immédiatement**.
+   - Même si la page détaillée d'un nouveau produit n'a pas encore été compilée en HTML, la page se charge dynamiquement en direct depuis le Sheet.
+
+2. **🔄 Niveau 2 - Synchronisation Automatique Serveur (Deploy Hook & Synchro Quotidienne)** :
+   - Pour que les pages restent ultra-rapides (< 0.3s) et parfaitement référencées sur Google (SEO), le site se re-déploie automatiquement :
+     - **À chaque modification** : Grâce au script `google-apps-script.js`, toute modification dans l'onglet `Produits` déclenche automatiquement un re-déploiement sur votre hébergeur (Render / Netlify). Délai : ~30 à 45 secondes.
+     - **Synchro quotidienne automatique** : Une tâche planifiée dans Apps Script tourne **chaque nuit à 2h du matin** pour forcer une synchronisation automatique et garantir que le catalogue en ligne est parfaitement aligné avec votre stock.
+
+---
+
+### ⚙️ Comment activer le Webhook automatique dans Google Sheets (En 2 minutes) :
+
+1. Sur votre hébergeur (ex: **Render** ou **Netlify**) :
+   - **Render** : Dans votre service web statique > *Settings* > *Deploy Hooks* > Cliquer sur *Add Deploy Hook* > Copier l'URL générée.
+   - **Netlify** : Dans *Site configuration* > *Build & deploy* > *Build hooks* > *Add build hook* > Copier l'URL.
+2. Dans votre Google Sheet :
+   - Aller dans **Extensions > Apps Script**.
+   - À gauche, cliquer sur l'icône d'engrenage ⚙️ **Paramètres du projet** > Faire défiler jusqu'à **Propriétés du script** > **Ajouter une propriété de script** :
+     - Nom de la propriété : `DEPLOY_HOOK_URL`
+     - Valeur : *Collez l'URL de deploy hook obtenue à l'étape 1*.
+   - Cliquer sur **Enregistrer les propriétés du script**.
+3. Activer les déclencheurs automatiques :
+   - Dans Apps Script, ouvrir le fichier `Code.gs` (ou `google-apps-script.js`).
+   - Dans le menu déroulant des fonctions en haut, sélectionner la fonction **`installerSynchronisationAutomatique`** et cliquer sur **Exécuter** (icône ▶️).
+   - Accepter les autorisations Google si demandées.
+   - **C'est terminé !** Dès cet instant, chaque modification dans votre Sheet relance automatiquement le site et la synchro quotidienne est active.
 
 ---
 

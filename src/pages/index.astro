@@ -24,14 +24,20 @@ const newProducts = getNewArrivalProducts(catalogProducts);
           title="Produits Disponibles"
           copy="Découvrez nos articles rigoureusement sélectionnés. Livraison rapide 58 wilayas et paiement à la réception."
         />
-        {catalogProducts.length > 0 ? (
-          <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {catalogProducts.map((product) => (
-              <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
-            ))}
-          </div>
-        ) : (
-          <div class="mt-8 rounded-3xl border border-brand-line bg-white/80 p-12 text-center shadow-soft">
+        <div
+          id="products-showcase-grid"
+          class:list={[
+            'mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+            catalogProducts.length === 0 ? 'hidden' : ''
+          ]}
+        >
+          {catalogProducts.map((product) => (
+            <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
+          ))}
+        </div>
+
+        {catalogProducts.length === 0 && (
+          <div id="sync-placeholder" class="mt-8 rounded-3xl border border-brand-line bg-white/80 p-12 text-center shadow-soft">
             <p class="text-lg font-semibold text-brand-charcoal">Synchronisation en cours...</p>
             <p class="mt-2 text-sm text-brand-muted">Vos produits sont chargés en direct depuis Google Sheets. Veuillez actualiser la page.</p>
           </div>
@@ -100,4 +106,13 @@ const newProducts = getNewArrivalProducts(catalogProducts);
       </section>
     </div>
   </section>
+
+  <script>
+    import { initLiveProductSync } from '../scripts/live-sync';
+    initLiveProductSync({
+      containerId: 'products-showcase-grid',
+      locale: 'fr',
+      emptyPlaceholderId: 'sync-placeholder'
+    });
+  </script>
 </MainLayout>

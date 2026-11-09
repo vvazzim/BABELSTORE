@@ -28,7 +28,11 @@ const badge = getProductBadge(product, locale);
 const cardImages = product.images.slice(0, 2);
 ---
 
-<article class="group overflow-hidden rounded-3xl border border-brand-line bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-premium">
+<article
+  class="group overflow-hidden rounded-3xl border border-brand-line bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-premium"
+  data-product-card
+  data-slug={product.slug}
+>
   <a href={`${basePath}/produit/${product.slug}`} class="block">
     <div class="relative overflow-hidden bg-brand-pearl p-3">
       {badge && (
@@ -74,7 +78,7 @@ const cardImages = product.images.slice(0, 2);
               {product.oldPrice}
             </div>
           )}
-          <div dir="ltr" class="inline-block whitespace-nowrap text-lg font-semibold text-brand-charcoal">
+          <div dir="ltr" data-price-val class="inline-block whitespace-nowrap text-lg font-semibold text-brand-charcoal">
             {product.price}
           </div>
         </div>

@@ -449,6 +449,116 @@ function jsonOutput_(payload) {
 }
 
 // ------------------------------------------------------------------------------
+// SYNCHRONISATION AUTOMATIQUE & DÉCLENCHEURS (BUILD HOOK / WEBHOOK)
+// ------------------------------------------------------------------------------
+// Déclenche le re-build automatique du site sur votre hébergeur (Render, Netlify, Vercel)
+// à chaque modification de l'onglet "Produits" ou sur planning quotidien.
+function triggerDeploy_(reason) {
+  try {
+    var prop = PropertiesService.getScriptProperties();
+    var hookUrl =
+      prop.getProperty('DEPLOY_HOOK_URL') ||
+      prop.getProperty('BUILD_HOOK_URL') ||
+      prop.getProperty('RENDER_DEPLOY_HOOK_URL') ||
+      prop.getProperty('NETLIFY_BUILD_HOOK_URL');
+
+    if (!hookUrl || !hookUrl.trim()) {
+      Logger.log('[triggerDeploy] Aucun hook de déploiement configuré dans Script Properties.');
+      return false;
+    }
+
+    // Cooldown anti-rebond (debounce) : évite de spammer les builds si l'utilisateur modifie plusieurs cellules à la suite
+    var cache = CacheService.getScriptCache();
+    if (cache && cache.get('last_deploy_trigger')) {
+      Logger.log('[triggerDeploy] Déploiement déjà déclenché récemment (< 60s). En attente.');
+      return false;
+    }
+    if (cache) {
+      cache.put('last_deploy_trigger', 'true', 60); // 60 secondes de cooldown
+    }
+
+    var options = {
+      method: 'post',
+      muteHttpExceptions: true
+    };
+
+    var res = UrlFetchApp.fetch(hookUrl.trim(), options);
+    Logger.log('[triggerDeploy] Hook appelé avec succès (' + (reason || 'edit') + '). Code HTTP: ' + res.getResponseCode());
+    return true;
+  } catch (err) {
+    Logger.log('[triggerDeploy] Erreur lors de l\'appel du hook: ' + err);
+    return false;
+  }
+}
+
+// Déclencheur automatique quand une cellule est modifiée dans Google Sheets
+function onSheetEdit(e) {
+  try {
+    var sheet = e && e.range ? e.range.getSheet() : null;
+    if (!sheet) return;
+
+    var sheetName = sheet.getName().toLowerCase();
+    // Ne relancer le déploiement QUE si la modification concerne les produits
+    if (sheetName === 'produits' || sheetName === 'products' || sheetName === 'articles') {
+      Logger.log('[onSheetEdit] Modification détectée dans l\'onglet Produits.');
+      triggerDeploy_('Modification onglet Produits');
+    }
+  } catch (err) {
+    Logger.log('[onSheetEdit] Erreur: ' + err);
+  }
+}
+
+// Déclencheur automatique lors d'un ajout/suppression de ligne ou structure (onChange)
+function onSheetChange(e) {
+  try {
+    var activeSheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var sheetName = activeSheet.getName().toLowerCase();
+
+    if (sheetName === 'produits' || sheetName === 'products' || sheetName === 'articles') {
+      Logger.log('[onSheetChange] Changement structurel détecté dans Produits.');
+      triggerDeploy_('Changement structurel Produits');
+    }
+  } catch (err) {
+    Logger.log('[onSheetChange] Erreur: ' + err);
+  }
+}
+
+// Synchronisation automatique quotidienne (chaque nuit)
+function autoSyncDaily() {
+  Logger.log('[autoSyncDaily] Lancement de la synchronisation automatique quotidienne...');
+  triggerDeploy_('Synchro automatique quotidienne');
+}
+
+// Fonction utilitaire à exécuter UNE SEULE FOIS pour configurer automatiquement tous les triggers
+function installerSynchronisationAutomatique() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // 1. Nettoyer les anciens triggers pour éviter les doublons
+  var existing = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < existing.length; i++) {
+    var fn = existing[i].getHandlerFunction();
+    if (fn === 'onSheetChange' || fn === 'onSheetEdit' || fn === 'autoSyncDaily') {
+      ScriptApp.deleteTrigger(existing[i]);
+    }
+  }
+
+  // 2. Créer le trigger "Lors d'une modification" (onChange)
+  ScriptApp.newTrigger('onSheetChange')
+    .forSpreadsheet(ss)
+    .onChange()
+    .create();
+
+  // 3. Créer le trigger quotidien automatique (tous les jours à 2h du matin)
+  ScriptApp.newTrigger('autoSyncDaily')
+    .timeBased()
+    .everyDays(1)
+    .atHour(2)
+    .create();
+
+  Logger.log('✅ Déclencheurs automatiques installés avec succès ! Le site se synchronisera à chaque modification et tous les jours.');
+}
+
+// ------------------------------------------------------------------------------
 // FONCTION DE TEST DANS L'ÉDITEUR
 // ------------------------------------------------------------------------------
 function testScript() {

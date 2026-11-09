@@ -24,21 +24,27 @@ const newProducts = getNewArrivalProducts(catalogProducts);
           title="المنتجات المتوفرة"
           copy="منتجات مختارة بعناية لتحسين راحتك اليومية. توصيل سريع لكافة الولايات والدفع عند الاستلام."
         />
-        {catalogProducts.length > 0 ? (
-          <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {catalogProducts.map((product) => (
-              <ProductCard
-                product={product}
-                locale="ar"
-                basePath="/ar"
-                availableColors={getAvailableColors(products, product.slug, product.variantGroup, 'ar')}
-                detailLabel="عرض المنتج"
-                colorsLabel="الألوان"
-              />
-            ))}
-          </div>
-        ) : (
-          <div class="mt-8 rounded-3xl border border-brand-line bg-white/80 p-12 text-center shadow-soft">
+        <div
+          id="products-showcase-grid-ar"
+          class:list={[
+            'mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+            catalogProducts.length === 0 ? 'hidden' : ''
+          ]}
+        >
+          {catalogProducts.map((product) => (
+            <ProductCard
+              product={product}
+              locale="ar"
+              basePath="/ar"
+              availableColors={getAvailableColors(products, product.slug, product.variantGroup, 'ar')}
+              detailLabel="عرض المنتج"
+              colorsLabel="الألوان"
+            />
+          ))}
+        </div>
+
+        {catalogProducts.length === 0 && (
+          <div id="sync-placeholder-ar" class="mt-8 rounded-3xl border border-brand-line bg-white/80 p-12 text-center shadow-soft">
             <p class="text-lg font-semibold text-brand-charcoal">جاري تحديث التشكيلة...</p>
             <p class="mt-2 text-sm text-brand-muted">يتم تحميل المنتجات مباشرة من جدول البيانات. يرجى تحديث الصفحة.</p>
           </div>
@@ -114,4 +120,13 @@ const newProducts = getNewArrivalProducts(catalogProducts);
       </section>
     </div>
   </section>
+
+  <script>
+    import { initLiveProductSync } from '../../scripts/live-sync';
+    initLiveProductSync({
+      containerId: 'products-showcase-grid-ar',
+      locale: 'ar',
+      emptyPlaceholderId: 'sync-placeholder-ar'
+    });
+  </script>
 </MainLayout>
