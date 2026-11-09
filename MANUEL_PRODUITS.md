@@ -1,72 +1,35 @@
-# Manuel Produits Cozy Space DZ
+# Manuel Produits & Commandes BABEL STORE
 
 ## Vue d'ensemble
 
-Le site utilise :
+Le site BABEL STORE utilise :
 
-- un seul Google Sheets
-- un seul Google Apps Script
-- une seule URL `/exec`
+- Un seul Google Sheet dédié : `1BJ_lZmNtQKoo9nLGgSkZbgPmIeK19xGQfNJHQqc4KNw`
+- Un seul Google Apps Script dédié : `https://script.google.com/macros/s/AKfycbx04iAg8nNppFp3grWFO5MfD7STZK759kW1XdfIjyqMViwkwzpRCD2J01alQq6s0hLt/exec`
+- Une seule URL `/exec`
 
-Le meme script sert pour :
+Le même script sert pour :
 
-- les produits
-- les commandes
-- le rebuild automatique Netlify si un Build Hook est configure
+- La lecture des produits (onglet `Produits`)
+- L'enregistrement instantané des commandes (onglet `Commandes`)
+- Le rebuild automatique si un Webhook de build est configuré
 
-## Onglets obligatoires dans le Google Sheets
+## Onglets obligatoires dans le Google Sheet
 
-Le spreadsheet doit contenir deux onglets :
+Le classeur doit contenir deux onglets :
 
-- `Produits`
-- `Commandes`
+1. `Produits`
+2. `Commandes`
 
-## Script Apps Script a utiliser
+## Fréquences de mise à jour
 
-Le seul fichier a coller dans Apps Script est :
-
-- `google-apps-script.js`
-
-Ne colle pas `google-products-apps-script.js`.
-Ce fichier n'est plus qu'un repere local.
-
-## Deployment Apps Script
-
-Dans Apps Script :
-
-1. `Deploy`
-2. `New deployment`
-3. `Application Web`
-4. Parametres :
-
-- `Description` : `Cozy Space DZ - Produits et commandes`
-- `Executer en tant que` : `Moi`
-- `Qui a acces` : `Tout le monde`
-
-## Script Properties
-
-Dans `Project Settings` > `Script properties`, ajoute :
-
-```text
-SPREADSHEET_ID=VOTRE_ID_GOOGLE_SHEET
-NETLIFY_BUILD_HOOK_URL=VOTRE_URL_BUILD_HOOK_NETLIFY
-```
-
-`NETLIFY_BUILD_HOOK_URL` est optionnel mais recommande.
-
-## Variables d'environnement du site
-
-Utilise la meme URL `/exec` pour :
-
-```env
-GOOGLE_SCRIPT_URL=VOTRE_URL_EXEC
-PUBLIC_GOOGLE_SCRIPT_URL=VOTRE_URL_EXEC
-PRODUCTS_FEED_URL=VOTRE_URL_EXEC
-```
+- **Commandes** : **Temps réel instantané (0 seconde)** dès que le client valide le formulaire.
+- **Produits en local** : **Temps réel** à chaque rechargement de page.
+- **Produits en production** : Récupérés à chaque déploiement (Build) sur l'hébergeur (Render, Netlify, Vercel). Cliquez sur "Deploy latest" pour réactualiser le site après avoir modifié le Google Sheet.
 
 ## Colonnes de l'onglet Produits
 
-Colle exactement cette ligne d'en-tetes :
+Collez exactement cette ligne d'en-têtes sur la première ligne :
 
 ```text
 id	slug	name	nameAr	baseName	baseNameAr	color	colorAr	variantGroup	category	collection	collectionAr	price	oldPrice	quantity	image	shortDescription	shortDescriptionAr	features	featuresAr	reasons	reasonsAr	availability	availabilityAr	featured	published	tags
@@ -74,106 +37,48 @@ id	slug	name	nameAr	baseName	baseNameAr	color	colorAr	variantGroup	category	coll
 
 ## Explication simple des colonnes
 
-- `id` : identifiant unique du produit
-- `slug` : lien unique du produit sur le site
-- `name` : nom du produit en francais
-- `nameAr` : nom du produit en arabe
-- `baseName` : nom court en francais
+- `id` : identifiant unique du produit (ex: `p1`, `p2`)
+- `slug` : URL du produit sur le site (ex: `lampe-led-bois`)
+- `name` : nom complet en français
+- `nameAr` : nom complet en arabe
+- `baseName` : nom court en français (pour les cartes catalogue)
 - `baseNameAr` : nom court en arabe
-- `color` : couleur ou couleurs en francais
-- `colorAr` : couleur ou couleurs en arabe
-- `variantGroup` : groupe de variantes
-- `category` : famille du produit
-- `collection` : collection en francais
-- `collectionAr` : collection en arabe
-- `price` : prix actuel
-- `oldPrice` : ancien prix si promotion
-- `quantity` : stock
-- `image` : lien du dossier Google Drive
-- `shortDescription` : petite description en francais
-- `shortDescriptionAr` : petite description en arabe
-- `features` : points forts en francais, separes par `|`
-- `featuresAr` : points forts en arabe, separes par `|`
-- `reasons` : pourquoi choisir ce produit en francais, separes par `|`
-- `reasonsAr` : pourquoi choisir ce produit en arabe, separes par `|`
-- `availability` : disponibilite en francais
-- `availabilityAr` : disponibilite en arabe
-- `featured` : `TRUE` si mis en avant
-- `published` : `TRUE` si visible sur le site
-- `tags` : mots-cles separes par `|`
-
-## Regles importantes
-
-- `id` doit etre unique
-- `slug` doit etre unique si tu veux une fiche produit differente
-- `category` peut contenir plusieurs familles
-
-Exemple :
-
-```text
-Voiture / Organisation
-Maison / Beaute
-```
-
-- `features` = bloc `Points forts`
-- `reasons` = bloc `Pourquoi choisir ce produit ?`
+- `color` : couleur(s) en français (séparer par `/` si plusieurs)
+- `colorAr` : couleur(s) en arabe
+- `variantGroup` : groupe de variantes pour associer plusieurs couleurs
+- `category` : catégorie du produit (ex: `Maison & Déco`, `High-Tech`)
+- `collection` : collection en français (ex: `Éclairage Intelligent`)
+- `collectionAr` : collection en arabe (ex: `إضاءة ذكية وعصرية`)
+- `price` : prix actuel de vente (ex: `1 600 DA`)
+- `oldPrice` : ancien prix barré si réduction (ex: `2 500 DA`)
+- `quantity` : stock disponible (ex: `15`)
+- `image` : lien du dossier Google Drive contenant les photos
+- `shortDescription` : courte description en français
+- `shortDescriptionAr` : courte description en arabe
+- `features` : points forts en français, séparés par `|`
+- `featuresAr` : points forts en arabe, séparés par `|`
+- `reasons` : pourquoi choisir ce produit en français, séparés par `|`
+- `reasonsAr` : pourquoi choisir ce produit en arabe, séparés par `|`
+- `availability` : disponibilité en français (ex: `Disponible (15 restants)`)
+- `availabilityAr` : disponibilité en arabe (ex: `متوفر (متبقي 15 قطعة فقط)`)
+- `featured` : `TRUE` si affiché en vedette sur l'accueil, sinon `FALSE`
+- `published` : `TRUE` pour publier sur le site, `FALSE` pour masquer
+- `tags` : mots-clés séparés par des virgules pour la recherche
 
 ## Images Google Drive
 
-Dans la colonne `image`, colle un lien de dossier Drive, par exemple :
+Dans la colonne `image`, collez le lien de partage du dossier Google Drive :
 
 ```text
-https://drive.google.com/drive/folders/VOTRE_FOLDER_ID?usp=sharing
+https://drive.google.com/drive/folders/1hcbUYsHjZOEk1SRRgV8nZ9ow6wO1P5Lp?usp=sharing
 ```
 
-Le script recupere automatiquement les images :
-
-- `.png`
-- `.jpg`
-- `.jpeg`
-
-## Exemple de ligne produit
-
-```text
-p1	miroir-lumineux-noir	Miroir Lumineux Noir	مرآة LED للسيارة	Miroir Lumineux	مرآة مضيئة	Noir / Blanc	أسود / أبيض	miroir-lumineux	Voiture / Beaute	Luxe Quotidien	أناقة يومية	2 800 DA		8	https://drive.google.com/drive/folders/156u6zuBTOugqtSbqE0xP0nwMrzuY6s4l?usp=drive_link	Un miroir lumineux noir elegant pour illuminer votre espace quotidien.	مرآة مضيئة سوداء لاضافة لمسة راقية لمساحتك اليومية.	Eclairage LED integre|Design moderne|Finition noire elegante|Usage quotidien	اضاءة LED مدمجة|تصميم عصري|تشطيب اسود انيق|استعمال يومي	Livraison dans toute l Algerie|Paiement a la livraison|Verification avant paiement	توصيل لكل الولايات|الدفع عند الاستلام|إمكانية التحقق قبل الدفع	Disponible	متوفر	TRUE	TRUE	miroir|lumineux|noir|eclairage
-```
-
-## Rebuild automatique Netlify
-
-Si `NETLIFY_BUILD_HOOK_URL` est configure :
-
-- toute modification de l'onglet `Produits`
-- peut relancer automatiquement un deploy Netlify
-
-Pour une meilleure fiabilite, ajoute aussi ces triggers installables dans Apps Script :
-
-- `onEdit` -> `From spreadsheet` -> `On edit`
-- `onChange` -> `From spreadsheet` -> `On change`
+> **Attention** : Le dossier Google Drive doit impérativement être configuré sur **"Tous les utilisateurs disposant du lien"** (accès public en lecture).
 
 ## Colonnes de l'onglet Commandes
 
-Tu peux utiliser :
+L'application Web enregistre automatiquement les colonnes suivantes :
 
 ```text
-Timestamp	Prenom	Nom	Telephone	Produit	Couleur	Quantite	Slug Produit	Prix	Adresse
+Date	Prenom	Nom	Telephone	Produit	Couleur	Quantite	Slug Produit	Prix	Adresse	Statut
 ```
-
-## Verifications rapides
-
-### Verifier les produits
-
-Ouvre l'URL `/exec`.
-Tu dois voir un JSON avec :
-
-- `success: true`
-- `products: [...]`
-
-### Verifier les commandes
-
-Passe une commande test depuis le site.
-La commande doit apparaitre dans l'onglet `Commandes`.
-
-### Verifier le rebuild automatique
-
-Modifie une cellule dans `Produits`.
-Netlify doit lancer un nouveau deploy si le hook est configure.
