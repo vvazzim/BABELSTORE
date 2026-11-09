@@ -1,0 +1,395 @@
+---
+import { type Locale, uiText } from '../lib/i18n';
+
+interface Props {
+  productName: string;
+  productSlug: string;
+  productPrice?: string;
+  colors?: string[];
+  embedded?: boolean;
+  locale?: Locale;
+}
+
+const { productName, productSlug, productPrice = '', colors = [], embedded = false, locale = 'fr' } = Astro.props;
+const labels = uiText[locale].order;
+const submitUrl = "/.netlify/functions/submit-order";
+const directScriptUrl = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
+const countryCodes = [
+  { label: '+213  Algerie', value: '+213' },
+  { label: '+33  France', value: '+33' },
+  { label: '+216  Tunisie', value: '+216' },
+  { label: '+212  Maroc', value: '+212' },
+  { label: '+1  USA / Canada', value: '+1' }
+];
+---
+
+<div
+  id="order-modal"
+  class:list={[
+    embedded ? 'mt-8' : 'fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm',
+    embedded ? '' : ''
+  ]}
+>
+  <div class:list={[embedded ? '' : 'flex min-h-screen items-center justify-center p-4']}>
+    <div class:list={['card-shell bg-white p-6', embedded ? 'w-full' : 'w-full max-w-md']}>
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-brand-charcoal">{labels.title} {productName}</h3>
+        {!embedded && (
+          <button id="close-modal" class="text-brand-muted hover:text-brand-charcoal">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        )}
+      </div>
+
+      <form id="order-form" action={submitUrl} method="POST" data-direct-url={directScriptUrl} class="mt-6 space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="firstName" class="block text-sm font-medium text-brand-charcoal">{labels.firstName}</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              minlength="2"
+              required
+              class="mt-1 block w-full rounded-lg border border-brand-line px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+            />
+          </div>
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-brand-charcoal">{labels.lastName}</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              minlength="2"
+              required
+              class="mt-1 block w-full rounded-lg border border-brand-line px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div>
+          {colors.length > 0 && (
+            <>
+              <div class="block text-sm font-medium text-brand-charcoal">{labels.color}</div>
+              <div class="mt-2 flex flex-wrap gap-3" data-color-picker>
+                {colors.map((color, index) => (
+                  <button
+                    type="button"
+                    class:list={[
+                      'rounded-full border px-4 py-2 text-sm font-semibold transition',
+                      index === 0
+                        ? 'border-brand-charcoal bg-brand-charcoal text-white'
+                        : 'border-brand-line bg-white text-brand-charcoal hover:border-brand-gold'
+                    ]}
+                    data-color-option
+                    data-color-value={color}
+                    aria-pressed={index === 0 ? 'true' : 'false'}
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
+              <input type="hidden" id="selectedColor" name="color" value={colors[0]} />
+            </>
+          )}
+        </div>
+
+        <div>
+          <label for="phoneLocal" class="block text-sm font-medium text-brand-charcoal">{labels.phone}</label>
+          <div class="mt-1 grid grid-cols-[130px_minmax(0,1fr)] gap-2">
+            <select
+              id="countryCode"
+              name="countryCode"
+              class="rounded-lg border border-brand-line bg-white px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+            >
+              {countryCodes.map((code) => (
+                <option value={code.value}>{code.label}</option>
+              ))}
+            </select>
+            <input
+              type="tel"
+              id="phoneLocal"
+              name="phoneLocal"
+              inputmode="numeric"
+              autocomplete="tel-national"
+              minlength="8"
+              maxlength="15"
+              pattern="[0-9 ]{8,15}"
+              placeholder="0550123456"
+              required
+              class="block w-full rounded-lg border border-brand-line px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+            />
+          </div>
+          <p class="mt-1 text-xs text-brand-muted">Exemple : 0550123456</p>
+          <input type="hidden" id="phone" name="phone" value="" />
+        </div>
+
+        <div>
+          <label for="quantity" class="block text-sm font-medium text-brand-charcoal">{labels.quantity}</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="1"
+            step="1"
+            value="1"
+            required
+            class="mt-1 block w-full rounded-lg border border-brand-line px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label for="address" class="block text-sm font-medium text-brand-charcoal">{labels.address}</label>
+          <textarea
+            id="address"
+            name="address"
+            rows="3"
+            minlength="8"
+            required
+            class="mt-1 block w-full rounded-lg border border-brand-line px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
+            placeholder={labels.addressPlaceholder}
+          ></textarea>
+        </div>
+
+        <input type="hidden" name="product" value={productName} />
+        <input type="hidden" name="productSlug" value={productSlug} />
+        <input type="hidden" name="price" value={productPrice} />
+
+        <div class="flex gap-3 pt-4">
+          <button
+            type="submit"
+            data-submit-label={labels.submit}
+            class="flex-1 rounded-full bg-brand-charcoal px-6 py-3 text-sm font-semibold text-white hover:bg-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2"
+          >
+            {labels.submit}
+          </button>
+          <button
+            type="button"
+            id="cancel-order"
+            class:list={[
+              'rounded-full border border-brand-line bg-white px-6 py-3 text-sm font-semibold text-brand-charcoal hover:bg-brand-bg focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2',
+              embedded ? 'hidden' : ''
+            ]}
+          >
+            {labels.cancel}
+          </button>
+        </div>
+      </form>
+
+      <div id="success-message" class="mt-4 hidden rounded-lg bg-green-50 p-4 text-sm text-green-800">
+        {labels.success}
+      </div>
+
+      <div id="error-message" class="mt-4 hidden rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        {labels.error}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const modal = document.getElementById('order-modal');
+  const closeBtn = document.getElementById('close-modal');
+  const cancelBtn = document.getElementById('cancel-order');
+  const form = document.getElementById('order-form');
+  const phoneInput = document.getElementById('phoneLocal');
+  const phoneHiddenInput = document.getElementById('phone');
+  const countryCodeSelect = document.getElementById('countryCode');
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  const colorInput = document.getElementById('selectedColor');
+  const colorButtons = Array.from(document.querySelectorAll('[data-color-option]'));
+  const submitButton = form?.querySelector('button[type="submit"]');
+  const defaultSubmitLabel = submitButton?.getAttribute('data-submit-label') || 'Commander';
+  const isEmbedded = modal?.classList.contains('mt-8');
+
+  const buildPhoneNumber = () => {
+    if (!phoneInput || !phoneHiddenInput || !countryCodeSelect) return false;
+
+    const countryCode = countryCodeSelect.value.trim();
+    let digits = phoneInput.value.replace(/\D/g, '');
+
+    if (!digits || digits.length < 8 || digits.length > 15) {
+      phoneInput.setCustomValidity('Veuillez saisir un numero valide.');
+      phoneHiddenInput.value = '';
+      return false;
+    }
+
+    if (countryCode === '+213' && digits.startsWith('0')) {
+      digits = digits.slice(1);
+    }
+
+    phoneInput.setCustomValidity('');
+    phoneHiddenInput.value = `${countryCode}${digits}`;
+    return true;
+  };
+
+  phoneInput?.addEventListener('input', () => {
+    if (!phoneInput) return;
+    phoneInput.value = phoneInput.value.replace(/[^\d ]/g, '');
+    buildPhoneNumber();
+  });
+
+  countryCodeSelect?.addEventListener('change', buildPhoneNumber);
+
+  const syncSelectedColor = (button) => {
+    if (!colorInput) return;
+
+    const nextColor = button?.getAttribute('data-color-value') || '';
+    colorInput.value = nextColor;
+
+    colorButtons.forEach((item) => {
+      const isActive = item === button;
+      item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      item.classList.toggle('border-brand-charcoal', isActive);
+      item.classList.toggle('bg-brand-charcoal', isActive);
+      item.classList.toggle('text-white', isActive);
+      item.classList.toggle('border-brand-line', !isActive);
+      item.classList.toggle('bg-white', !isActive);
+      item.classList.toggle('text-brand-charcoal', !isActive);
+    });
+  };
+
+  colorButtons.forEach((button) => {
+    button.addEventListener('click', () => syncSelectedColor(button));
+  });
+
+  window.openOrderModal = () => {
+    if (!modal) return;
+    if (modal.classList.contains('mt-8')) return;
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    if (!modal || !form || !successMessage || !errorMessage) return;
+    if (!isEmbedded) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    form.reset();
+    if (phoneHiddenInput) {
+      phoneHiddenInput.value = '';
+    }
+    if (colorButtons[0]) {
+      syncSelectedColor(colorButtons[0]);
+    }
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+  };
+
+  closeBtn?.addEventListener('click', closeModal);
+  cancelBtn?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    if (!successMessage || !errorMessage || !submitButton || !form) return;
+
+    e.preventDefault();
+
+    const isPhoneValid = buildPhoneNumber();
+    if (!isPhoneValid || !form.reportValidity()) {
+      errorMessage.classList.remove('hidden');
+      successMessage.classList.add('hidden');
+      return;
+    }
+
+    submitButton.setAttribute('disabled', 'disabled');
+    submitButton.textContent = 'Envoi...';
+    errorMessage.classList.add('hidden');
+    successMessage.classList.add('hidden');
+
+    try {
+      const formData = new FormData(form);
+      const payload = new URLSearchParams();
+
+      for (const [key, value] of formData.entries()) {
+        payload.append(key, String(value));
+      }
+
+      let responseOk = false;
+      let responseJson = null;
+      const directUrl = form.getAttribute('data-direct-url') || '';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          body: payload.toString()
+        });
+
+        const responseText = await response.text();
+        try {
+          responseJson = JSON.parse(responseText || '{}');
+        } catch {
+          responseJson = null;
+        }
+
+        if (response.ok && (!responseJson || responseJson.success !== false)) {
+          responseOk = true;
+        } else if (response.status === 404 && directUrl) {
+          // Si la fonction serverless n'est pas déployée sur cet hébergeur (ex. Cloudflare Pages sans Netlify),
+          // on envoie directement à Google Apps Script
+          await fetch(directUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: payload.toString(),
+            mode: 'no-cors'
+          });
+          responseOk = true;
+        } else {
+          throw new Error(responseJson?.message || "Echec de l'envoi de la commande.");
+        }
+      } catch (err) {
+        if (directUrl && !responseOk) {
+          try {
+            await fetch(directUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+              },
+              body: payload.toString(),
+              mode: 'no-cors'
+            });
+            responseOk = true;
+          } catch (directErr) {
+            throw err;
+          }
+        } else {
+          throw err;
+        }
+      }
+
+      if (!responseOk) {
+        throw new Error(responseJson?.message || "Echec de l'envoi de la commande.");
+      }
+
+      successMessage.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+
+      window.setTimeout(() => {
+        submitButton.removeAttribute('disabled');
+        submitButton.textContent = defaultSubmitLabel;
+        closeModal();
+      }, 2500);
+    } catch (error) {
+      submitButton.removeAttribute('disabled');
+      submitButton.textContent = defaultSubmitLabel;
+      errorMessage.textContent =
+        error instanceof Error && error.message ? error.message : 'Une erreur est survenue.';
+      errorMessage.classList.remove('hidden');
+      successMessage.classList.add('hidden');
+    }
+  });
+</script>

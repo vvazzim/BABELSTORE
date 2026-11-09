@@ -1,0 +1,51 @@
+---
+import { brandAssets } from '../data/site';
+import { getSiteData, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+  descriptionText?: string;
+}
+
+const { locale = 'fr', descriptionText } = Astro.props as Props;
+const siteData = getSiteData(locale);
+---
+
+<section class="section-shell pt-8 sm:pt-12">
+  <div class="container-shell">
+    <div class="relative overflow-hidden rounded-[2.5rem] border border-white/20 bg-babel-hero shadow-premium">
+      <div class="relative grid items-center gap-10 px-6 py-10 sm:px-12 sm:py-16 lg:grid-cols-[0.85fr_1.15fr] lg:px-16 lg:py-20">
+        <div class="flex justify-center lg:justify-start">
+          <div class="relative overflow-hidden rounded-[2rem] border border-brand-gold/30 bg-white/10 p-2 shadow-2xl backdrop-blur-md transition duration-500 hover:scale-[1.02]">
+            <img 
+              src={brandAssets.banner} 
+              alt={`${siteData.brandName} Concept Visuel`} 
+              class="h-72 w-72 rounded-[1.7rem] object-cover sm:h-88 sm:w-88 lg:h-[26rem] lg:w-[22rem]" 
+            />
+            <div class="absolute bottom-4 left-4 right-4 rounded-xl border border-white/20 bg-brand-charcoal/85 px-4 py-2.5 backdrop-blur-md">
+              <div class="text-xs font-semibold tracking-wider text-brand-gold">BABEL EXCLUSIVE</div>
+              <div class="text-[11px] text-white/80">{locale === 'ar' ? 'تشكيلة راقية لكل يوم' : 'Sélection chic & utile'}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="max-w-2xl">
+          {siteData.heroBadge && <span class="eyebrow border-brand-gold/40 bg-brand-burgundy/40 text-brand-goldsoft">{siteData.heroBadge}</span>}
+          <h1 class="mt-5 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            {siteData.brandName}
+          </h1>
+          <p class="mt-4 text-base font-semibold uppercase tracking-[0.14em] text-brand-gold sm:text-lg">
+            {siteData.tagline}
+          </p>
+          <p class="mt-5 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
+            {descriptionText || siteData.description}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href={siteData.primaryCTA.href} class="btn-primary !px-8 !py-3.5 !text-base shadow-xl">{siteData.primaryCTA.label}</a>
+            <a href={siteData.secondaryCTA.href} class="btn-secondary !border-white/30 !bg-white/10 !text-white hover:!bg-white/20 !px-7 !py-3.5 !text-base">{siteData.secondaryCTA.label}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

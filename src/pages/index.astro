@@ -1,0 +1,64 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { getAvailableColors, getCatalogProducts, getNewArrivalProducts, getPopularProducts, getPromotionProducts, getProducts } from '../lib/product-source';
+
+const products = await getProducts();
+const catalogProducts = getCatalogProducts(products);
+const promotions = getPromotionProducts(catalogProducts);
+const popularProducts = getPopularProducts(catalogProducts);
+const newProducts = getNewArrivalProducts(catalogProducts);
+---
+
+<MainLayout title="Accueil" description="Produits utiles, fiables et sélectionnés avec soin pour faciliter votre quotidien.">
+  <section class="section-shell pt-8">
+    <div class="container-shell space-y-12">
+      {promotions.length > 0 && (
+        <section>
+          <SectionTitle eyebrow="Promotions" title="Produits en solde" copy="Les produits en réduction à liquider en priorité." />
+          <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {promotions.map((product) => (
+              <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section>
+        <SectionTitle eyebrow="Produits les plus demandés" title="Produits populaires" copy="Ce que les clients choisissent le plus en ce moment." />
+        <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {popularProducts.map((product) => (
+            <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <SectionTitle eyebrow="Nouveautés" title="Les derniers produits ajoutés" copy="Les nouvelles références apparaissent ici automatiquement." />
+        <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {newProducts.map((product) => (
+            <ProductCard product={product} availableColors={getAvailableColors(products, product.slug, product.variantGroup)} />
+          ))}
+        </div>
+      </section>
+
+      <section class="card-shell p-8 sm:p-10">
+        <h2 class="text-2xl font-semibold text-brand-charcoal">Votre confiance est notre priorité</h2>
+        <p class="mt-4 max-w-4xl text-sm leading-7 text-brand-muted sm:text-base">
+          Chez Cozy Space DZ, nous nous engageons à vous offrir des produits utiles, fiables et de qualité, sélectionnés avec soin pour faciliter votre quotidien.
+        </p>
+        <ul class="mt-6 grid gap-3 text-sm text-brand-muted sm:grid-cols-2">
+          <li>• Livraison rapide dans toute l’Algérie</li>
+          <li>• Paiement à la livraison</li>
+          <li>• Possibilité de vérifier le produit avant de payer</li>
+          <li>• Service client disponible et à votre écoute</li>
+        </ul>
+        <p class="mt-6 max-w-4xl text-sm leading-7 text-brand-muted sm:text-base">
+          Votre satisfaction est au cœur de notre mission. Nous faisons de notre mieux pour vous offrir une expérience simple, sécurisée et agréable.
+        </p>
+        <a href="mailto:cozyspace.dz@gmail.com?subject=Réclamation%20Cozy%20Space%20DZ" class="btn-primary mt-6">Faire une réclamation</a>
+      </section>
+    </div>
+  </section>
+</MainLayout>

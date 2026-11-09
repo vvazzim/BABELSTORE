@@ -1,0 +1,44 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
+import { arabicFaqItems } from '../../data/faq';
+---
+
+<MainLayout locale="ar" title="اتصل بنا" description="فريقنا متواجد للإجابة على جميع استفساراتكم بخصوص منتجاتنا أو طلباتكم أو التوصيل.">
+  <section class="section-shell">
+    <div class="container-shell">
+      <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div class="card-shell p-8 sm:p-10">
+          <div class="eyebrow">اتصل بنا</div>
+          <h1 class="mt-4 text-4xl font-semibold text-brand-charcoal">نحن هنا لمساعدتكم</h1>
+          <div class="mt-6 space-y-4 text-sm leading-8 text-brand-muted sm:text-base">
+            <p>فريقنا متواجد للإجابة على جميع استفساراتكم بخصوص منتجاتنا أو طلباتكم أو التوصيل.</p>
+            <p>لا تترددوا في التواصل معنا، يسعدنا مساعدتكم في أي وقت.</p>
+          </div>
+
+          <div class="mt-8 rounded-[1.75rem] border border-brand-line bg-brand-bg p-5">
+            <p class="text-sm font-semibold text-brand-charcoal">أوقات الرد</p>
+            <p class="mt-2 text-sm leading-7 text-brand-muted">كل يوم من 8:00 صباحاً إلى 21:00 مساءً</p>
+            <p class="mt-4 text-sm font-semibold text-brand-charcoal">طرق التواصل</p>
+            <a href="mailto:cozyspace.dz@gmail.com" class="mt-2 inline-block text-sm font-medium text-brand-charcoal underline underline-offset-4">
+              cozyspace.dz@gmail.com
+            </a>
+          </div>
+
+          <div class="mt-8">
+            <SocialLinks locale="ar" />
+          </div>
+        </div>
+
+        <div>
+          <div class="eyebrow">الأسئلة الشائعة</div>
+          <h2 class="mt-4 text-3xl font-semibold text-brand-charcoal">إجابات سريعة</h2>
+          <div class="mt-8">
+            <FAQ items={arabicFaqItems} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ord-1794183683668",
+    "timestamp": "2026-11-09T00:21:23.668Z",
+    "payload": {
+      "fullName": "Babel Test Client",
+      "phone": "0555001122",
+      "wilaya": "16 - Alger",
+      "commune": "Bab Ezzouar",
+      "address": "Cite 5 Juillet",
+      "productSlug": "miroir-lumineux",
+      "productName": "Miroir Lumineux Test",
+      "selectedColor": "Garnet Red",
+      "quantity": 1,
+      "unitPrice": 4500,
+      "totalPrice": 4500
+    },
+    "forwardedToGoogle": true,
+    "googleResult": {
+      "success": true,
+      "message": "Commande enregistree"
+    }
+  }
+]

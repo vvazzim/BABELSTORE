@@ -1,0 +1,265 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import OrderForm from '../../../components/OrderForm.astro';
+import { getProductColors, getProducts, getSimilarProducts } from '../../../lib/product-source';
+
+const productPageCopy: Record<
+  string,
+  {
+    title: string;
+    subtitle: string;
+    kicker: string;
+    description: string;
+  }
+> = {
+  'miroir-lumineux-noir': {
+    title: 'مرآة LED للسيارة',
+    subtitle: 'مكياج مثالي في أي وقت',
+    kicker: 'وداعاً لضعف الإضاءة داخل السيارة.',
+    description:
+      'توفر لك هذه المرآة إضاءة مثالية أينما كنتِ، مثالية للتنقل، العمل أو الخروج.'
+  }
+};
+
+export async function getStaticPaths() {
+  const products = await getProducts();
+
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product, products }
+  }));
+}
+
+const { product, products } = Astro.props;
+const displayName = product.baseNameAr || product.baseName || product.nameAr || product.name;
+const productName = product.nameAr || product.name;
+const collection = product.collectionAr || product.collection;
+const description = product.shortDescriptionAr || product.shortDescription;
+const features = product.featuresAr || product.features;
+const similarProducts = getSimilarProducts(products, product);
+const colors = getProductColors(product, 'ar');
+const galleryId = `product-gallery-${product.slug}`;
+const pageCopy = productPageCopy[product.slug];
+const headingTitle = pageCopy?.title || displayName;
+const headingSubtitle = pageCopy?.subtitle || '';
+const kicker = pageCopy?.kicker || description;
+const longDescription = pageCopy?.description || description;
+const highlightsTitle = 'النقاط القوية';
+const highlights = features;
+const reasonsTitle = 'لماذا تختارين هذا المنتج؟';
+const reasons = product.reasonsAr?.length ? product.reasonsAr : product.reasons || [];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: headingTitle,
+  description: longDescription,
+  image: product.images,
+  category: product.category,
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'DZD',
+    price: product.price.replace(/[^\d]/g, ''),
+    availability: 'https://schema.org/InStock'
+  }
+};
+---
+
+<MainLayout locale="ar" title={headingTitle} description={longDescription} image={product.images[0]}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+
+  <section class="section-shell">
+    <div class="container-shell">
+      <div class="mb-8">
+        <div class="text-sm font-semibold uppercase tracking-brand text-brand-muted">{collection}</div>
+        <h1 class="mt-3 text-3xl font-semibold text-brand-charcoal sm:text-5xl">{headingTitle}</h1>
+        {headingSubtitle && <p class="mt-3 text-lg font-medium text-brand-charcoal/80 sm:text-2xl">{headingSubtitle}</p>}
+        <p class="mt-4 max-w-2xl text-base leading-8 text-brand-muted sm:text-lg">{kicker}</p>
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-start">
+        <div class="card-shell overflow-hidden p-4 sm:p-6">
+          <div class="relative" data-product-gallery={galleryId}>
+            <div
+              id={galleryId}
+              class="product-gallery-track flex snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-[1.5rem]"
+              dir="ltr"
+            >
+              {product.images.map((image, index) => (
+                <figure class="product-gallery-slide w-full min-w-full overflow-hidden bg-brand-pearl">
+                  <img
+                    src={image}
+                    alt={`${productName} ${index + 1}`}
+                    class="aspect-[4/5] w-full object-cover"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    referrerpolicy="no-referrer"
+                  />
+                </figure>
+              ))}
+            </div>
+
+            {product.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-brand-line bg-white/90 px-3 py-2 text-sm font-semibold text-brand-charcoal shadow-soft hover:border-brand-gold"
+                  data-gallery-prev={galleryId}
+                  aria-label="الصورة السابقة"
+                >
+                  &lt;
+                </button>
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-brand-line bg-white/90 px-3 py-2 text-sm font-semibold text-brand-charcoal shadow-soft hover:border-brand-gold"
+                  data-gallery-next={galleryId}
+                  aria-label="الصورة التالية"
+                >
+                  &gt;
+                </button>
+              </>
+            )}
+          </div>
+
+          {product.images.length > 1 && (
+            <div class="mt-4 flex flex-wrap justify-center gap-2" data-gallery-dots={galleryId}>
+              {product.images.map((image, index) => (
+                <button
+                  type="button"
+                  class="product-gallery-dot h-2.5 w-2.5 rounded-full bg-brand-line"
+                  data-gallery-dot={galleryId}
+                  data-gallery-index={index}
+                  aria-label={`عرض الصورة ${index + 1}`}
+                  aria-current={index === 0 ? 'true' : 'false'}
+                ></button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <p class="mt-4 text-sm leading-8 text-brand-muted sm:text-base">{longDescription}</p>
+
+          <div class="mt-6 flex items-end gap-4">
+            <div dir="ltr" class="inline-block whitespace-nowrap text-2xl font-semibold text-brand-charcoal">
+              {product.price}
+            </div>
+            {product.oldPrice && (
+              <div dir="ltr" class="inline-block whitespace-nowrap text-sm text-brand-muted line-through">
+                {product.oldPrice}
+              </div>
+            )}
+          </div>
+
+          <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5">
+            <div class="text-sm font-semibold text-brand-charcoal">{highlightsTitle}</div>
+            <ul class="mt-4 grid gap-3 text-sm text-brand-muted">
+              {highlights.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-gold"></span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {reasons.length > 0 && (
+            <div class="mt-6 rounded-3xl border border-brand-line bg-white p-5">
+              <div class="text-sm font-semibold text-brand-charcoal">{reasonsTitle}</div>
+              <ul class="mt-4 space-y-3 text-sm leading-8 text-brand-muted">
+                {reasons.map((reason) => (
+                  <li class="flex items-start gap-3">
+                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-brand-charcoal"></span>
+                    <span>{reason}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/ar/catalogue" class="btn-secondary">زيارة المتجر</a>
+            <a href="/ar/contact" class="btn-secondary">تواصل مع العلامة</a>
+          </div>
+
+          <OrderForm
+            productName={productName}
+            productSlug={product.slug}
+            productPrice={product.price}
+            colors={colors}
+            embedded={true}
+            locale="ar"
+          />
+        </div>
+      </div>
+
+      {similarProducts.length > 0 && (
+        <div class="mt-20">
+          <h2 class="text-2xl font-semibold text-brand-charcoal">منتجات مشابهة</h2>
+          <div class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {similarProducts.map((item) => (
+              <ProductCard
+                product={item}
+                locale="ar"
+                basePath="/ar"
+                detailLabel="عرض المنتج"
+                colorsLabel="الألوان"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+  <script is:inline>
+    (() => {
+      const setupGallery = (root) => {
+        const galleryId = root.getAttribute('data-product-gallery');
+        if (!galleryId) return;
+
+        const track = document.getElementById(galleryId);
+        if (!track) return;
+
+        const dots = Array.from(document.querySelectorAll(`[data-gallery-dot="${galleryId}"]`));
+        const prevButton = document.querySelector(`[data-gallery-prev="${galleryId}"]`);
+        const nextButton = document.querySelector(`[data-gallery-next="${galleryId}"]`);
+
+        const getIndex = () => {
+          const width = track.clientWidth || 1;
+          return Math.round(track.scrollLeft / width);
+        };
+
+        const updateDots = () => {
+          const activeIndex = getIndex();
+          dots.forEach((dot, index) => {
+            dot.setAttribute('aria-current', index === activeIndex ? 'true' : 'false');
+          });
+        };
+
+        const scrollToIndex = (index) => {
+          track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
+        };
+
+        prevButton?.addEventListener('click', () => {
+          scrollToIndex(Math.max(0, getIndex() - 1));
+        });
+
+        nextButton?.addEventListener('click', () => {
+          scrollToIndex(Math.min(dots.length - 1, getIndex() + 1));
+        });
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => scrollToIndex(index));
+        });
+
+        track.addEventListener('scroll', () => {
+          window.requestAnimationFrame(updateDots);
+        });
+
+        window.addEventListener('resize', updateDots);
+        updateDots();
+      };
+
+      document.querySelectorAll('[data-product-gallery]').forEach(setupGallery);
+    })();
+  </script>
+</MainLayout>
