@@ -25,7 +25,8 @@
   }
 
   ::selection {
-    @apply bg-brand-grenat/25 text-brand-navy;
+    background-color: rgba(120, 0, 22, 0.25);
+    color: #0B132B;
   }
 
   a,
