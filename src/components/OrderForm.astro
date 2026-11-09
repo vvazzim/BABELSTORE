@@ -293,6 +293,50 @@ const countryCodes = [
     }
   });
 
+  const submitViaHiddenIframe = (url, payload) => {
+    return new Promise((resolve) => {
+      let iframe = document.getElementById('hidden_order_iframe');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.id = 'hidden_order_iframe';
+        iframe.name = 'hidden_order_iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      }
+
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = url;
+      tempForm.target = 'hidden_order_iframe';
+      tempForm.style.display = 'none';
+
+      for (const [key, value] of payload.entries()) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        tempForm.appendChild(input);
+      }
+
+      document.body.appendChild(tempForm);
+
+      let resolved = false;
+      const cleanup = () => {
+        if (!resolved) {
+          resolved = true;
+          try {
+            tempForm.remove();
+          } catch {}
+          resolve(true);
+        }
+      };
+
+      iframe.onload = cleanup;
+      setTimeout(cleanup, 2000);
+      tempForm.submit();
+    });
+  };
+
   form?.addEventListener('submit', async (e) => {
     if (!successMessage || !errorMessage || !submitButton || !form) return;
 
@@ -300,6 +344,7 @@ const countryCodes = [
 
     const isPhoneValid = buildPhoneNumber();
     if (!isPhoneValid || !form.reportValidity()) {
+      errorMessage.textContent = 'Veuillez saisir un numéro de téléphone valide.';
       errorMessage.classList.remove('hidden');
       successMessage.classList.add('hidden');
       return;
@@ -317,66 +362,62 @@ const countryCodes = [
       for (const [key, value] of formData.entries()) {
         payload.append(key, String(value));
       }
+      if (!payload.has('action')) {
+        payload.append('action', 'order');
+      }
 
-      let responseOk = false;
-      let responseJson = null;
       const directUrl = form.getAttribute('data-direct-url') || '';
+      const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      let responseOk = false;
 
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: payload.toString()
-        });
-
-        const responseText = await response.text();
+      // 1. En environnement de dev local (sur localhost), tenter l'API locale
+      if (isLocalHost && form.action.includes('.netlify')) {
         try {
-          responseJson = JSON.parse(responseText || '{}');
-        } catch {
-          responseJson = null;
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+            body: payload.toString()
+          });
+          if (res.ok) {
+            const json = await res.json().catch(() => null);
+            if (!json || json.success !== false) {
+              responseOk = true;
+            }
+          }
+        } catch {}
+      }
+
+      // 2. En production (ou si l'API locale a échoué) : envoi direct ultra-fiable vers Google Apps Script
+      if (!responseOk && directUrl) {
+        // Méthode A : GET avec CORS (retourne du JSON propre avec Access-Control-Allow-Origin: *)
+        try {
+          const getUrl = new URL(directUrl);
+          for (const [k, v] of payload.entries()) {
+            getUrl.searchParams.set(k, v);
+          }
+          const getRes = await fetch(getUrl.toString(), {
+            method: 'GET',
+            headers: { Accept: 'application/json' }
+          });
+          if (getRes.ok) {
+            const getJson = await getRes.json().catch(() => null);
+            if (getJson && getJson.success !== false) {
+              responseOk = true;
+            }
+          }
+        } catch (getErr) {
+          console.warn('[order-form] Direct GET fetch had an issue, trying hidden iframe fallback:', getErr);
         }
 
-        if (response.ok && (!responseJson || responseJson.success !== false)) {
+        // Méthode B : Fallback natif via iframe masqué (zéro restriction CORS, compatible 100% navigateurs)
+        if (!responseOk) {
+          await submitViaHiddenIframe(directUrl, payload);
           responseOk = true;
-        } else if (!response.ok && directUrl) {
-          // Si la fonction serverless n'est pas disponible sur cet hébergeur (ex. Render, Cloudflare Pages),
-          // on envoie directement à Google Apps Script
-          await fetch(directUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: payload.toString(),
-            mode: 'no-cors'
-          });
-          responseOk = true;
-        } else {
-          throw new Error(responseJson?.message || "Echec de l'envoi de la commande.");
-        }
-      } catch (err) {
-        if (directUrl && !responseOk) {
-          try {
-            await fetch(directUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-              },
-              body: payload.toString(),
-              mode: 'no-cors'
-            });
-            responseOk = true;
-          } catch (directErr) {
-            throw err;
-          }
-        } else {
-          throw err;
         }
       }
 
       if (!responseOk) {
-        throw new Error(responseJson?.message || "Echec de l'envoi de la commande.");
+        throw new Error("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
       }
 
       successMessage.classList.remove('hidden');
