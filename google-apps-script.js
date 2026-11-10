@@ -548,11 +548,11 @@ function installerSynchronisationAutomatique() {
     .onChange()
     .create();
 
-  // 3. Créer le trigger quotidien automatique (tous les jours à 2h du matin)
+  // 3. Créer le trigger quotidien automatique (tous les jours à minuit 00:00)
   ScriptApp.newTrigger('autoSyncDaily')
     .timeBased()
     .everyDays(1)
-    .atHour(2)
+    .atHour(0)
     .create();
 
   Logger.log('✅ Déclencheurs automatiques installés avec succès ! Le site se synchronisera à chaque modification et tous les jours.');
