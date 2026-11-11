@@ -12,15 +12,15 @@ export const faqItems: FAQItem[] = [
   },
   {
     question: 'Dans quelles wilayas livrez-vous ?',
-    answer: 'Nous livrons dans toutes les wilayas d Algerie.'
+    answer: 'Nous assurons la livraison express dans l ensemble des 69 wilayas d Algerie avec paiement a la livraison.'
   },
   {
     question: 'Combien de temps prend la livraison ?',
-    answer: 'La livraison prend generalement 2 a 5 jours ouvrables selon votre wilaya.'
+    answer: 'La livraison prend generalement 24h a 48h (jusqu a 3-5 jours pour les wilayas du Grand Sud).'
   },
   {
     question: 'Puis-je verifier le produit avant de payer ?',
-    answer: 'Oui, vous pouvez verifier votre colis avant de payer pour garantir votre satisfaction.'
+    answer: 'Oui, vous pouvez ouvrir et verifier votre colis avant de payer pour garantir votre satisfaction totale.'
   }
 ];
 
@@ -36,7 +36,7 @@ export const arabicFaqItems: FAQItem[] = [
   },
   {
     question: 'هل التوصيل متوفر لكل الولايات؟',
-    answer: 'نعم، نقوم بالتوصيل إلى جميع ولايات الجزائر.'
+    answer: 'نعم، نوفر التوصيل السريع إلى كافة الـ 69 ولاية في الجزائر والدفع عند الاستلام.'
   },
   {
     question: 'كم يستغرق وقت التوصيل؟',

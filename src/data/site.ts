@@ -5,7 +5,7 @@ export const siteData: SiteData = {
   brandName: 'BUBLE STORE DZ',
   tagline: 'Sélection exclusive & tendances du quotidien',
   description:
-    'Boutique algérienne dédiée aux articles tendance, élégants et indispensables pour votre confort au quotidien. Qualité vérifiée, livraison rapide 58 wilayas et paiement sécurisé à la livraison.',
+    'Boutique algérienne dédiée aux articles tendance, élégants et indispensables pour votre confort au quotidien. Qualité vérifiée, livraison rapide 69 wilayas et paiement sécurisé à la livraison.',
   primaryCTA: {
     label: 'Découvrir la sélection',
     href: '/catalogue'
@@ -31,12 +31,12 @@ export const siteData: SiteData = {
       href: 'https://www.facebook.com/people/BUBLE-STORE/61596175466412/'
     }
   ],
-  heroBadge: 'BUBLE STORE DZ | Livraison 58 Wilayas | Paiement à la livraison',
+  heroBadge: 'BUBLE STORE DZ | Livraison 69 Wilayas | Paiement à la livraison',
   email: 'babel.store.off@gmail.com',
   trustItems: [
     {
-      title: 'Livraison 58 Wilayas',
-      description: 'Expédition express sécurisée dans toute l Algérie avec confirmation directe par appel.'
+      title: 'Livraison 69 Wilayas',
+      description: 'Expédition express sécurisée dans les 69 wilayas d Algérie avec confirmation directe par appel.'
     },
     {
       title: 'Paiement à la livraison',
@@ -96,12 +96,12 @@ export const arabicSiteData: SiteData = {
       href: 'https://www.facebook.com/people/BUBLE-STORE/61596175466412/'
     }
   ],
-  heroBadge: 'BUBLE STORE DZ | توصيل لكافة الولايات | الدفع بعد المعاينة',
+  heroBadge: 'BUBLE STORE DZ | توصيل 69 ولاية | الدفع بعد المعاينة',
   email: 'babel.store.off@gmail.com',
   trustItems: [
     {
-      title: 'توصيل سريع 58 ولاية',
-      description: 'شحن موثوق وسريع مع تأكيد فوري عبر الهاتف ومتابعة مستمرة حتى باب داركم.'
+      title: 'توصيل سريع 69 ولاية',
+      description: 'شحن موثوق وسريع لكافة الـ 69 ولاية مع تأكيد فوري عبر الهاتف ومتابعة مستمرة حتى باب داركم.'
     },
     {
       title: 'الدفع عند الاستلام',

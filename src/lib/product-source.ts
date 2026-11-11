@@ -74,12 +74,29 @@ const parseCsv = (csvText: string): Record<string, unknown>[] => {
     for (let h = 0; h < headers.length; h++) {
       const val = (values[h] || '').replace(/^["']|["']$/g, '').trim();
       row[headers[h]] = val;
+      row[headers[h].toLowerCase()] = val;
       if (val) hasValue = true;
     }
-    if (hasValue && row.id) rows.push(row);
+    const rowId = row.id || row.Id || row.ID || row.slug || row.Slug;
+    if (hasValue && rowId) rows.push(row);
   }
 
   return rows;
+};
+
+const getField = (row: Record<string, unknown>, ...keys: string[]): unknown => {
+  for (const k of keys) {
+    if (row[k] !== undefined && row[k] !== null && String(row[k]).trim() !== '') {
+      return row[k];
+    }
+    const lowerK = k.toLowerCase().replace(/[\s_-]/g, '');
+    for (const [rk, rv] of Object.entries(row)) {
+      if (rk.toLowerCase().replace(/[\s_-]/g, '') === lowerK && rv !== undefined && rv !== null && String(rv).trim() !== '') {
+        return rv;
+      }
+    }
+  }
+  return undefined;
 };
 
 const fetchDirectGoogleSheetCsv = async (sheetId: string) => {
@@ -218,47 +235,50 @@ const normalizeDriveImages = (value: unknown) => {
 };
 
 const normalizeProduct = (row: Record<string, unknown>, index: number): Product => {
-  const images = normalizeDriveImages(row.images || row.image);
-  const quantityValue = Number.parseInt(String(row.quantity ?? ''), 10);
+  const images = normalizeDriveImages(getField(row, 'images', 'image', 'photos', 'photo'));
+  const rawQty = getField(row, 'quantity', 'stock', 'qte', 'quantite');
+  const quantityValue = Number.parseInt(String(rawQty ?? ''), 10);
   const quantity = Number.isFinite(quantityValue) ? quantityValue : undefined;
-  const published = normalizeBoolean(row.published, true);
-  const featured = normalizeBoolean(row.featured, false);
+  const published = normalizeBoolean(getField(row, 'published', 'publie', 'actif', 'active'), true);
+  const featured = normalizeBoolean(getField(row, 'featured', 'vedette'), false);
 
-  const rawName = cleanCellText(row.name || row.slug || `Produit ${index + 1}`);
-  const rawNameAr = cleanCellText(row.nameAr);
-  const baseName = cleanCellText(row.baseName || rawName);
-  const baseNameAr = cleanCellText(row.baseNameAr || rawNameAr);
-  const rawDesc = cleanCellText(row.shortDescription);
-  const rawDescAr = cleanCellText(row.shortDescriptionAr);
+  const rawName = cleanCellText(getField(row, 'name', 'nom', 'title', 'titre') || getField(row, 'slug') || `Produit ${index + 1}`);
+  const rawNameAr = cleanCellText(getField(row, 'nameAr', 'nomAr', 'name_ar', 'nom_ar'));
+  const baseName = cleanCellText(getField(row, 'baseName', 'nomBase', 'base_name') || rawName);
+  const baseNameAr = cleanCellText(getField(row, 'baseNameAr', 'nomBaseAr', 'base_name_ar') || rawNameAr);
+  const rawDesc = cleanCellText(getField(row, 'shortDescription', 'description', 'short_description', 'desc'));
+  const rawDescAr = cleanCellText(getField(row, 'shortDescriptionAr', 'descriptionAr', 'short_description_ar', 'descAr'));
+  const rawPrice = cleanCellText(getField(row, 'price', 'prix', 'Price', 'Prix', 'tarif'));
+  const rawOldPrice = cleanCellText(getField(row, 'oldPrice', 'old_price', 'ancienPrix', 'ancien_prix'));
 
   return {
-    id: cleanCellText(row.id || `sheet-product-${index + 1}`),
-    slug: cleanCellText(row.slug || `produit-${index + 1}`),
+    id: cleanCellText(getField(row, 'id', 'Id', 'ID') || `sheet-product-${index + 1}`),
+    slug: cleanCellText(getField(row, 'slug', 'Slug') || `produit-${index + 1}`),
     name: rawName || defaultProduct.name,
     nameAr: rawNameAr,
     baseName: baseName || rawName || defaultProduct.baseName,
     baseNameAr: baseNameAr,
-    color: cleanCellText(row.color),
-    colorAr: cleanCellText(row.colorAr),
-    variantGroup: cleanCellText(row.variantGroup),
-    category: cleanCellText(row.category) || defaultProduct.category,
-    collection: cleanCellText(row.collection) || defaultProduct.collection,
-    collectionAr: cleanCellText(row.collectionAr),
-    price: cleanCellText(row.price) || defaultProduct.price,
-    oldPrice: cleanCellText(row.oldPrice),
+    color: cleanCellText(getField(row, 'color', 'couleur')),
+    colorAr: cleanCellText(getField(row, 'colorAr', 'couleurAr', 'color_ar')),
+    variantGroup: cleanCellText(getField(row, 'variantGroup', 'groupe', 'variant_group')),
+    category: cleanCellText(getField(row, 'category', 'categorie')) || defaultProduct.category,
+    collection: cleanCellText(getField(row, 'collection')) || defaultProduct.collection,
+    collectionAr: cleanCellText(getField(row, 'collectionAr', 'collection_ar')),
+    price: rawPrice || defaultProduct.price,
+    oldPrice: rawOldPrice,
     images: images.length ? images : defaultProduct.images,
     shortDescription: rawDesc || defaultProduct.shortDescription,
     shortDescriptionAr: rawDescAr,
-    features: splitList(row.features),
-    featuresAr: splitList(row.featuresAr),
-    reasons: splitList(row.reasons),
-    reasonsAr: splitList(row.reasonsAr),
-    availability: cleanCellText(row.availability) || (typeof quantity === 'number' ? (quantity > 0 ? 'Disponible' : 'Rupture de stock') : 'Disponible'),
-    availabilityAr: cleanCellText(row.availabilityAr) || (typeof quantity === 'number' ? (quantity > 0 ? 'متوفر' : 'غير متوفر') : 'متوفر'),
+    features: splitList(getField(row, 'features', 'caracteristiques', 'points_forts')),
+    featuresAr: splitList(getField(row, 'featuresAr', 'caracteristiquesAr')),
+    reasons: splitList(getField(row, 'reasons', 'raisons', 'pourquoi')),
+    reasonsAr: splitList(getField(row, 'reasonsAr', 'raisonsAr')),
+    availability: cleanCellText(getField(row, 'availability', 'disponibilite')) || (typeof quantity === 'number' ? (quantity > 0 ? 'Disponible' : 'Rupture de stock') : 'Disponible'),
+    availabilityAr: cleanCellText(getField(row, 'availabilityAr', 'disponibiliteAr')) || (typeof quantity === 'number' ? (quantity > 0 ? 'متوفر' : 'غير متوفر') : 'متوفر'),
     quantity,
     published,
     featured,
-    tags: splitList(row.tags)
+    tags: splitList(getField(row, 'tags', 'mots_cles'))
   };
 };
 
