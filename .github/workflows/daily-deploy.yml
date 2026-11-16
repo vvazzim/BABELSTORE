@@ -10,6 +10,8 @@ jobs:
   daily-rebuild:
     name: Rebuild et synchronisation du catalogue
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Déclencher le webhook de déploiement (si configuré)
         if: env.DEPLOY_HOOK_URL != ''
@@ -23,9 +25,14 @@ jobs:
       - name: Déclenchement automatique par commit de synchronisation
         if: env.DEPLOY_HOOK_URL == ''
         uses: actions/checkout@v4
-      - if: env.DEPLOY_HOOK_URL == ''
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Commit et push pour déclencher Netlify
+        if: env.DEPLOY_HOOK_URL == ''
         run: |
-          git config --global user.name "Buble Store Bot"
-          git config --global user.email "bot@bublestore.dz"
-          git commit --allow-empty -m "chore(cron): synchronisation automatique du catalogue à 00:00 [skip ci]" || echo "Rien à commiter"
-          git push origin main || echo "Push ignoré"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore(cron): synchronisation automatique du catalogue à 00:00"
+          git push origin main
