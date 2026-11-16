@@ -402,11 +402,17 @@ function getPublicImagesFromFolder_(folderId) {
       var name = String(file.getName() || '').toLowerCase();
       var mimeType = String(file.getMimeType() || '').toLowerCase();
       var isImage = mimeType === 'image/png' || mimeType === 'image/jpeg' || mimeType === 'image/webp' || /\.(png|jpe?g|webp)$/i.test(name);
+      var isVideo = mimeType === 'video/mp4' || mimeType === 'video/webm' || /\.(mp4|webm|mov)$/i.test(name);
 
       if (isImage) {
         images.push({
           name: file.getName(),
           url: 'https://lh3.googleusercontent.com/d/' + file.getId() + '=w1600'
+        });
+      } else if (isVideo) {
+        images.push({
+          name: file.getName(),
+          url: 'https://drive.usercontent.google.com/download?id=' + file.getId() + '&export=download'
         });
       }
     }

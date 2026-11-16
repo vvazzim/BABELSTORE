@@ -185,6 +185,21 @@ const normalizeBoolean = (value: unknown, fallback = false) => {
   return ['true', '1', 'yes', 'oui'].includes(normalized);
 };
 
+export const isVideoMedia = (value: unknown): boolean => {
+  const str = String(value || '').toLowerCase().trim();
+  if (!str) return false;
+  const clean = str.split('?')[0];
+  return (
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.webm') ||
+    clean.endsWith('.mov') ||
+    clean.endsWith('.ogg') ||
+    str.includes('/video-') ||
+    str.includes('video=true') ||
+    str.includes('export=download')
+  );
+};
+
 const normalizeDriveImage = (value: unknown) => {
   const input = String(value || '').trim();
   if (!input) return '';
@@ -214,10 +229,12 @@ const normalizeDriveImages = (value: unknown) => {
     const folderId = folderMatch[1];
     if (folderId === '1hcbUYsHjZOEk1SRRgV8nZ9ow6wO1P5Lp') {
       return [
-        'https://lh3.googleusercontent.com/d/1gfcoKAtv9AXI4MuP4NKLRcZZuu38kd-2=w1600',
-        'https://lh3.googleusercontent.com/d/18TkswzWVQU2W2vpsCMBuWMwluapX2c2X=w1600',
-        'https://lh3.googleusercontent.com/d/1hFUMSaYj764xGDhD_RunOhQs1vxXYHS_=w1600',
-        'https://lh3.googleusercontent.com/d/1ShWdFWZit-6Ay0Rmd71PhfOygcnORQLa=w1600'
+        '/media/lampe-led-bois/photo-1.jpg',
+        '/media/lampe-led-bois/photo-2.jpg',
+        '/media/lampe-led-bois/photo-3.jpg',
+        '/media/lampe-led-bois/photo-4.jpg',
+        '/media/lampe-led-bois/video-1.mp4',
+        '/media/lampe-led-bois/video-2.mp4'
       ];
     }
   }
@@ -235,7 +252,7 @@ const normalizeDriveImages = (value: unknown) => {
 };
 
 const normalizeProduct = (row: Record<string, unknown>, index: number): Product => {
-  const images = normalizeDriveImages(getField(row, 'images', 'image', 'photos', 'photo'));
+  let images = normalizeDriveImages(getField(row, 'images', 'image', 'photos', 'photo'));
   const rawQty = getField(row, 'quantity', 'stock', 'qte', 'quantite');
   const quantityValue = Number.parseInt(String(rawQty ?? ''), 10);
   const quantity = Number.isFinite(quantityValue) ? quantityValue : undefined;
@@ -251,9 +268,23 @@ const normalizeProduct = (row: Record<string, unknown>, index: number): Product 
   const rawPrice = cleanCellText(getField(row, 'price', 'prix', 'Price', 'Prix', 'tarif'));
   const rawOldPrice = cleanCellText(getField(row, 'oldPrice', 'old_price', 'ancienPrix', 'ancien_prix'));
 
+  const slug = cleanCellText(getField(row, 'slug', 'Slug') || `produit-${index + 1}`);
+  const id = cleanCellText(getField(row, 'id', 'Id', 'ID') || `sheet-product-${index + 1}`);
+
+  if (slug === 'lampe-led-bois' || id === 'p1') {
+    images = [
+      '/media/lampe-led-bois/photo-1.jpg',
+      '/media/lampe-led-bois/photo-2.jpg',
+      '/media/lampe-led-bois/photo-3.jpg',
+      '/media/lampe-led-bois/photo-4.jpg',
+      '/media/lampe-led-bois/video-1.mp4',
+      '/media/lampe-led-bois/video-2.mp4'
+    ];
+  }
+
   return {
-    id: cleanCellText(getField(row, 'id', 'Id', 'ID') || `sheet-product-${index + 1}`),
-    slug: cleanCellText(getField(row, 'slug', 'Slug') || `produit-${index + 1}`),
+    id,
+    slug,
     name: rawName || defaultProduct.name,
     nameAr: rawNameAr,
     baseName: baseName || rawName || defaultProduct.baseName,

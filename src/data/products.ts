@@ -19,10 +19,12 @@ export const products: Product[] = [
     price: '1 600 DA',
     oldPrice: '2 500 DA',
     images: [
-      'https://lh3.googleusercontent.com/d/1gfcoKAtv9AXI4MuP4NKLRcZZuu38kd-2=w1600',
-      'https://lh3.googleusercontent.com/d/18TkswzWVQU2W2vpsCMBuWMwluapX2c2X=w1600',
-      'https://lh3.googleusercontent.com/d/1hFUMSaYj764xGDhD_RunOhQs1vxXYHS_=w1600',
-      'https://lh3.googleusercontent.com/d/1ShWdFWZit-6Ay0Rmd71PhfOygcnORQLa=w1600'
+      '/media/lampe-led-bois/photo-1.jpg',
+      '/media/lampe-led-bois/photo-2.jpg',
+      '/media/lampe-led-bois/photo-3.jpg',
+      '/media/lampe-led-bois/photo-4.jpg',
+      '/media/lampe-led-bois/video-1.mp4',
+      '/media/lampe-led-bois/video-2.mp4'
     ],
     shortDescription: 'Éclairage sans fil avec détecteur de mouvement intelligent, fixation magnétique 2 en 1 et finition bois noble.',
     shortDescriptionAr: 'إضاءة ذكية مع مستشعر حركة وشحن وتثبيت مغناطيسي.',

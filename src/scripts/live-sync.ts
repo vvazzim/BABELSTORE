@@ -415,6 +415,11 @@ function createDynamicProductCard(prod: LiveProduct, locale: 'fr' | 'ar'): HTMLE
   }
 
   const primaryImg = images[0] || '/images/brand/babel-concept.jpg';
+  const isVideo =
+    primaryImg.endsWith('.mp4') ||
+    primaryImg.endsWith('.webm') ||
+    primaryImg.endsWith('.mov') ||
+    primaryImg.includes('/video-');
   const detailLink = isAr ? `/ar/produit/${slug}` : `/produit/${slug}`;
   const detailLabel = isAr ? 'عرض المنتج' : 'Voir le produit';
 
@@ -431,13 +436,11 @@ function createDynamicProductCard(prod: LiveProduct, locale: 'fr' | 'ar'): HTMLE
           ${isAr ? 'جديد' : 'Nouveau'}
         </span>
         <div class="overflow-hidden rounded-[1.25rem] bg-white">
-          <img
-            src="${primaryImg}"
-            alt="${imageAlt}"
-            class="aspect-[4/5] w-full object-cover transition duration-300 group-hover:scale-[1.02]"
-            loading="lazy"
-            referrerpolicy="no-referrer"
-          />
+          ${
+            isVideo
+              ? `<video src="${primaryImg}" autoplay muted loop playsinline class="aspect-[4/5] w-full object-cover transition duration-300 group-hover:scale-[1.02]"></video>`
+              : `<img src="${primaryImg}" alt="${imageAlt}" class="aspect-[4/5] w-full object-cover transition duration-300 group-hover:scale-[1.02]" loading="lazy" referrerpolicy="no-referrer" />`
+          }
         </div>
       </div>
       <div class="p-5">
